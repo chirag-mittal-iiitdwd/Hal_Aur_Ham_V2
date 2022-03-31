@@ -5,15 +5,166 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
+      child: Stack(
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 80.w),
-            margin: EdgeInsets.only(top: 10.h),
-            child: Image.asset('Assets/Images/App_Logo.png'),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: <Color>[
+                  Colors.yellow,
+                  Colors.orange,
+                  Colors.green,
+                ],
+              ),
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 20.h),
+                child: Text(
+                  "Hal Aur Ham",
+                  style:
+                      TextStyle(fontSize: 22.sp, fontWeight: FontWeight.w700),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 1.h),
+                margin: EdgeInsets.only(top: 10.h),
+                child: Image.asset('Assets/Images/App_Logo.png'),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 30.w),
+                title: Text(
+                  'User Profile',
+                  style: TextStyle(
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.supervised_user_circle,
+                  color: Colors.black,
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 30.w),
+                title: Text(
+                  'Home',
+                  style: TextStyle(
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.home,
+                  color: Colors.black,
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 30.w),
+                title: Text(
+                  'Weather',
+                  style: TextStyle(
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.cloud,
+                  color: Colors.black,
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 30.w),
+                title: Text(
+                  'Drone Status',
+                  style: TextStyle(
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.airplanemode_active_sharp,
+                  color: Colors.black,
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 30.w),
+                title: Text(
+                  'Crop Viz',
+                  style: TextStyle(
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.auto_graph,
+                  color: Colors.black,
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 30.w),
+                title: Text(
+                  'Crop Scan',
+                  style: TextStyle(
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.document_scanner_outlined,
+                  color: Colors.black,
+                ),
+                onTap: () {},
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red[800],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.r),
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: Row(
+                      children: [
+                        Text(
+                          "Logout  ",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22.sp,
+                          ),
+                        ),
+                        Icon(
+                          Icons.logout,
+                          color: Colors.black,
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 }
+
+// Container(
+//             padding: EdgeInsets.symmetric(horizontal: 80.w),
+//             margin: EdgeInsets.only(top: 10.h),
+//             child: Image.asset('Assets/Images/App_Logo.png'),
+//           ),

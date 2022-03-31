@@ -64,6 +64,57 @@ class WelcomeScreen extends StatelessWidget {
                         ),
                         child: NewsCarasoul(),
                       ),
+                      SizedBox(
+                        height: 230.h,
+                      ),
+                      GridTileBar(
+                        backgroundColor: Colors.black87,
+                        title: Text(
+                          'What Would You Like To Do',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 22.sp),
+                        ),
+                      ),
+                      SizedBox(height: 15.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          FlatButton(
+                            onPressed: () {},
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100.r),
+                              child: Image.asset(
+                                'Assets/Images/weather.png',
+                                height: 60.h,
+                              ),
+                            ),
+                          ),
+                          FlatButton(
+                            onPressed: () {},
+                            child: Image.asset(
+                              'Assets/Images/camera.png',
+                              height: 60.h,
+                            ),
+                          ),
+                          FlatButton(
+                            onPressed: () {},
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100.r),
+                              child: Image.asset(
+                                'Assets/Images/graph.jpg',
+                                height: 60.h,
+                              ),
+                            ),
+                          ),
+                          FlatButton(
+                            onPressed: () {},
+                            child: Image.asset(
+                              'Assets/Images/drone.png',
+                              height: 60.h,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -75,9 +126,3 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 }
-// class _HomeState extends State<Home> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return 
-//   }
-// }

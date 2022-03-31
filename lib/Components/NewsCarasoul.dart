@@ -19,7 +19,7 @@ class _NewsCarasoulState extends State<NewsCarasoul> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20.r),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+        padding: EdgeInsets.symmetric(vertical: 10.h),
         color: Color(0xffFFDFB0),
         child: Row(
           children: [
@@ -36,7 +36,12 @@ class _NewsCarasoulState extends State<NewsCarasoul> {
                 carouselController: controller,
                 itemCount: newsData.items.length,
                 itemBuilder: (context, index, realIndex) {
-                  return Center(child: Text(newsData.items[index].news));
+                  return Container(
+                    margin: EdgeInsets.symmetric(horizontal: 12.w),
+                    child: Center(
+                      child: Text(newsData.items[index].news),
+                    ),
+                  );
                 },
                 options: CarouselOptions(
                   initialPage: 0,
