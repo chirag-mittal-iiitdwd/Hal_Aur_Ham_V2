@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:hal_aur_ham_v2/Components/NewsCarasoul.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../Components/App_Drawer.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -8,19 +10,74 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: AppDrawer(),
       body: Stack(
-        children: [
-          Image.asset(
-            'Assets/Images/farm_back.jpg',
-            fit: BoxFit.cover,
-            height: double.infinity,
-            width: double.infinity,
-            alignment: Alignment.center,
+        children: <Widget>[
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            extendBodyBehindAppBar: true,
+            drawer: AppDrawer(),
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0.0,
+            ),
+            body: Stack(
+              children: [
+                Image.asset(
+                  'Assets/Images/farm_back.jpg',
+                  fit: BoxFit.cover,
+                  height: double.infinity,
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 85.h),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 28.w),
+                        child: Text(
+                          'Welcome, User',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 32.sp,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 28.w),
+                        child: Text(
+                          DateFormat.yMMMd().format(DateTime.now()),
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 30.w,
+                          vertical: 20.h,
+                        ),
+                        child: NewsCarasoul(),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-          NewsCarasoul(),
         ],
       ),
     );
   }
 }
+// class _HomeState extends State<Home> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return 
+//   }
+// }
