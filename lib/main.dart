@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'package:hal_aur_ham_v2/Screens/Login_Register.dart';
+import '../Model/Weather_Model.dart';
+import '../Screens/Weather.dart';
+import '../Screens/Login_Register.dart';
 import './Screens/Login_Register.dart';
 import './Model/NewsItems.dart';
 import './Screens/WelcomeScreen.dart';
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
           home: LoginRegister(),
           routes: {
             WelcomeScreen.routName: (ctx) => WelcomeScreen(),
+            WeatherScreen.routeName: (ctx) => WeatherScreen(),
           },
         ),
       ),

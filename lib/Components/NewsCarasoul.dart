@@ -49,9 +49,11 @@ class _NewsCarasoulState extends State<NewsCarasoul> {
                   enlargeCenterPage: true,
                   // enableInfiniteScroll: false,
                   onPageChanged: (index, reason) => {
-                    setState(() => {
-                          activeIndex = index,
-                        })
+                    setState(
+                      () => {
+                        activeIndex = index,
+                      },
+                    ),
                   },
                 ),
               ),

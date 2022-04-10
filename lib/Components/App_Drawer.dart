@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../Screens/WelcomeScreen.dart';
+import '../Screens/Weather.dart';
+
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -64,7 +67,10 @@ class AppDrawer extends StatelessWidget {
                   Icons.home,
                   color: Colors.black,
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context)
+                      .pushReplacementNamed(WelcomeScreen.routName);
+                },
               ),
               ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 30.w),
@@ -79,7 +85,10 @@ class AppDrawer extends StatelessWidget {
                   Icons.cloud,
                   color: Colors.black,
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(WeatherScreen.routeName);
+                },
               ),
               ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 30.w),
@@ -162,9 +171,3 @@ class AppDrawer extends StatelessWidget {
     );
   }
 }
-
-// Container(
-//             padding: EdgeInsets.symmetric(horizontal: 80.w),
-//             margin: EdgeInsets.only(top: 10.h),
-//             child: Image.asset('Assets/Images/App_Logo.png'),
-//           ),

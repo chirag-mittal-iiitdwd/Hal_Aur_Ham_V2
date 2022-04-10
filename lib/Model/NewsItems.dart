@@ -9,7 +9,19 @@ class NewsItems with ChangeNotifier {
     ),
     News(
       news:
-          'PM Modi apologized that he is sorry that he couldn\'t convey his message properly',
+          'Headline Number 2',
+    ),
+    News(
+      news:
+          'Headline Number 3',
+    ),
+    News(
+      news:
+          'Headline Number 4',
+    ),
+    News(
+      news:
+          'Headline Number 5',
     ),
   ];
 
