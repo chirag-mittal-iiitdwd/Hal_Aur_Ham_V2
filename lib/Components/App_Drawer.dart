@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hal_aur_ham_v2/Screens/Login_Register.dart';
+import 'package:hal_aur_ham_v2/Screens/Profile_Screen.dart';
 
 import '../Screens/WelcomeScreen.dart';
 import '../Screens/Weather.dart';
@@ -52,7 +54,9 @@ class AppDrawer extends StatelessWidget {
                   Icons.supervised_user_circle,
                   color: Colors.black,
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushReplacementNamed(Profile.routeName);
+                },
               ),
               ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 30.w),
@@ -86,8 +90,7 @@ class AppDrawer extends StatelessWidget {
                   color: Colors.black,
                 ),
                 onTap: () {
-                  Navigator.of(context)
-                      .pushNamed(WeatherScreen.routeName);
+                  Navigator.of(context).pushNamed(WeatherScreen.routeName);
                 },
               ),
               ListTile(
@@ -145,7 +148,10 @@ class AppDrawer extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15.r),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushReplacementNamed(LoginRegister.routeName);
+                    },
                     child: Row(
                       children: [
                         Text(

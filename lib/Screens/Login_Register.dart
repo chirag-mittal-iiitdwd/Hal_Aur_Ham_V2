@@ -5,6 +5,7 @@ import 'package:hal_aur_ham_v2/Screens/WelcomeScreen.dart';
 enum AuthMode { Login, Register }
 
 class LoginRegister extends StatefulWidget {
+  static const routeName = '/login_register';
   @override
   State<LoginRegister> createState() => _LoginRegisterState();
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hal_aur_ham_v2/Screens/Weather.dart';
 import 'package:intl/intl.dart';
 import 'package:hal_aur_ham_v2/Components/NewsCarasoul.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,7 +31,7 @@ class WelcomeScreen extends StatelessWidget {
                   alignment: Alignment.center,
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 85.h),
+                  margin: EdgeInsets.only(top: 85.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -75,12 +76,15 @@ class WelcomeScreen extends StatelessWidget {
                           style: TextStyle(fontSize: 22.sp),
                         ),
                       ),
-                      SizedBox(height: 15.h),
+                      SizedBox(height: 46.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           FlatButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pushReplacementNamed(
+                                  WeatherScreen.routeName);
+                            },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(100.r),
                               child: Image.asset(
