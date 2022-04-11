@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hal_aur_ham_v2/Model/ProfileModel.dart';
+import 'package:hal_aur_ham_v2/Screens/Crop_Scan.dart';
 import 'package:hal_aur_ham_v2/Screens/Crop_Viz.dart';
 import 'package:hal_aur_ham_v2/Screens/Drone_Status.dart';
+import 'package:hal_aur_ham_v2/Screens/Scan_Result.dart';
 import 'package:provider/provider.dart';
 
 import './Screens/Profile_Screen.dart';
@@ -47,6 +49,8 @@ class MyApp extends StatelessWidget {
             LoginRegister.routeName: (ctx) => LoginRegister(),
             DroneStatus.routeName: (ctx) => DroneStatus(),
             CropVizScreen.routeName: (ctx) => CropVizScreen(),
+            CropScan.routeName: (ctx) => CropScan(),
+            ScanResult.routeName: (ctx) => ScanResult(),
           },
         ),
       ),
