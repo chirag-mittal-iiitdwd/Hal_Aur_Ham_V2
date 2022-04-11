@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hal_aur_ham_v2/Screens/Crop_Viz.dart';
+import 'package:hal_aur_ham_v2/Screens/Drone_Status.dart';
 import 'package:hal_aur_ham_v2/Screens/Login_Register.dart';
 import 'package:hal_aur_ham_v2/Screens/Profile_Screen.dart';
 
@@ -106,7 +108,10 @@ class AppDrawer extends StatelessWidget {
                   Icons.airplanemode_active_sharp,
                   color: Colors.black,
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context)
+                      .pushReplacementNamed(DroneStatus.routeName);
+                },
               ),
               ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 30.w),
@@ -121,7 +126,10 @@ class AppDrawer extends StatelessWidget {
                   Icons.auto_graph,
                   color: Colors.black,
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context)
+                      .pushReplacementNamed(CropVizScreen.routeName);
+                },
               ),
               ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 30.w),
