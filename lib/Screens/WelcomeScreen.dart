@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hal_aur_ham_v2/Screens/Crop_Scan.dart';
 import 'package:hal_aur_ham_v2/Screens/Weather.dart';
 import 'package:intl/intl.dart';
 import 'package:hal_aur_ham_v2/Components/NewsCarasoul.dart';
@@ -94,7 +95,10 @@ class WelcomeScreen extends StatelessWidget {
                             ),
                           ),
                           FlatButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed(CropScan.routeName);
+                            },
                             child: Image.asset(
                               'Assets/Images/camera.png',
                               height: 60.h,
