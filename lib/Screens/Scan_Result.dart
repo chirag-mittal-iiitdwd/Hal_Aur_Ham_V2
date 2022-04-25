@@ -21,7 +21,7 @@ class _ScanResultState extends State<ScanResult> {
   var results;
   loadModel() async {
     await Tflite.loadModel(
-      model: 'Assets/models/myModel.tflite',
+      model: 'Assets/models/Plant_Disease_Detection_Model.tflite',
       labels: 'Assets/models/label.txt',
     );
   }
