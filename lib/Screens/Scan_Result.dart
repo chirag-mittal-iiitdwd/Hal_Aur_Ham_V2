@@ -113,64 +113,64 @@ class _ScanResultState extends State<ScanResult> {
                           child: Column(
                             children: [
                               SizedBox(
-                                height: 20,
+                                height: 20.h,
                               ),
                               Text(
                                 results != null
                                     ? "Disease: ${results[0]["label"]}"
                                     : "Loading...",
                                 style: TextStyle(
-                                    fontSize: 14.0,
+                                    fontSize: 14.sp,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
                               ),
                               SizedBox(
-                                height: 20,
+                                height: 20.h,
                               ),
                               Text(
                                 results != null
                                     ? "Confidence:  ${(results[0]["confidence"] * 100).toStringAsFixed(2)}%"
                                     : "Loading...",
                                 style: TextStyle(
-                                    fontSize: 18.0,
+                                    fontSize: 18.sp,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
                               ),
                               SizedBox(
-                                height: 20,
+                                height: 20.h,
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 70,
-                                  right: 70,
+                                padding: EdgeInsets.only(
+                                  left: 70.w,
+                                  right: 70.w,
                                 ),
                                 child: ListTile(
                                   title: Text(
                                     "Video Link",
                                     style: TextStyle(
-                                        fontSize: 20, color: Colors.white),
+                                        fontSize: 20.sp, color: Colors.white),
                                   ),
                                   trailing: Icon(
                                     CupertinoIcons.arrowtriangle_right_square,
-                                    size: 40,
+                                    size: 40.sp,
                                     color: Colors.white,
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 70.0, right: 70),
+                                padding:
+                                    EdgeInsets.only(left: 70.w, right: 70.w),
                                 child: ListTile(
                                   title: Text(
                                     "Blog Link",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 20.sp,
                                       color: Colors.white,
                                     ),
                                   ),
                                   trailing: Icon(
                                     Icons.chrome_reader_mode_sharp,
-                                    size: 40,
+                                    size: 40.sp,
                                     color: Colors.white,
                                   ),
                                 ),

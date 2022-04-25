@@ -5,6 +5,9 @@ import 'package:hal_aur_ham_v2/Components/extraWeather.dart';
 import 'package:hal_aur_ham_v2/Model/Weather_Model.dart';
 
 class WeatherDetail extends StatelessWidget {
+  final Weather tomorrowTemp;
+  final List<Weather> sevenDay;
+  WeatherDetail(this.tomorrowTemp, this.sevenDay);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,11 +25,11 @@ class WeatherDetail extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    TomorrowWeather(),
+                    TomorrowWeather(tomorrowTemp),
                     SizedBox(
                       height: 30.h,
                     ),
-                    SevenDays(),
+                    SevenDays(sevenDay),
                     SizedBox(
                       height: 20.h,
                     ),
@@ -42,6 +45,8 @@ class WeatherDetail extends StatelessWidget {
 }
 
 class TomorrowWeather extends StatelessWidget {
+  final Weather tomorrowTemp;
+  TomorrowWeather(this.tomorrowTemp);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -184,6 +189,8 @@ class TomorrowWeather extends StatelessWidget {
 }
 
 class SevenDays extends StatelessWidget {
+  final List<Weather> sevenDay;
+  SevenDays(this.sevenDay);
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -7,8 +7,60 @@ import '../Components/extraWeather.dart';
 import '../Model/Weather_Model.dart';
 import '../Components/App_Drawer.dart';
 
-class WeatherScreen extends StatelessWidget {
+Weather currentTemp;
+Weather tomorrowTemp;
+
+List<Weather> todayWeather;
+List<Weather> sevenDay;
+String lat = '53.9006';
+String lon = '27.5590';
+String city = "Minisk";
+
+class WeatherScreen extends StatefulWidget {
   static const routeName = '/waether';
+
+  @override
+  State<WeatherScreen> createState() => _WeatherScreenState();
+}
+
+class _WeatherScreenState extends State<WeatherScreen> {
+  getData() async {
+    try {
+      fetchData(lat, lon, city).then((value) {
+        currentTemp = value[0];
+        todayWeather = value[1];
+        tomorrowTemp = value[2];
+        sevenDay = value[3];
+        setState(() {});
+      });
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Color(0xff030317),
+            title: Text('Some Error Occured'),
+            // content: Text("Please check the city name"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("Ok"))
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,12 +85,18 @@ class WeatherScreen extends StatelessWidget {
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 70.h),
-                  child: Column(
-                    children: [
-                      CurrentWeather(),
-                      TodayWeather(),
-                    ],
-                  ),
+                  child: currentTemp == null
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              CurrentWeather(getData),
+                              TodayWeather(),
+                            ],
+                          ),
+                        ),
                 )
               ],
             ),
@@ -78,7 +136,7 @@ class TodayWeather extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return WeatherDetail();
+                            return WeatherDetail(tomorrowTemp, sevenDay);
                           },
                         ),
                       );
@@ -166,87 +224,163 @@ class WeatherWidget extends StatelessWidget {
   }
 }
 
-class CurrentWeather extends StatelessWidget {
+class CurrentWeather extends StatefulWidget {
+  final Function() updateData;
+  CurrentWeather(this.updateData);
+  @override
+  State<CurrentWeather> createState() => _CurrentWeatherState();
+}
+
+class _CurrentWeatherState extends State<CurrentWeather> {
+  bool searchBar = false;
+  bool updating = false;
+  var focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-      child: GlowContainer(
-        height: 450.h,
-        margin: EdgeInsets.symmetric(
-          vertical: 2.h,
-          horizontal: 2.w,
-        ),
-        padding: EdgeInsets.only(top: 30.h, left: 30.w, right: 30.w),
-        // glowColor: Color(0xB0FFDFB0),
-        borderRadius: BorderRadius.circular(30.r),
-        color: Color(0xB0FFDFB0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+    return GestureDetector(
+      onTap: () {
+        if (searchBar) {
+          setState(() {
+            searchBar = false;
+          });
+        }
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+        child: GlowContainer(
+          height: 450.h,
+          margin: EdgeInsets.symmetric(
+            vertical: 2.h,
+            horizontal: 2.w,
+          ),
+          padding: EdgeInsets.only(top: 30.h, left: 30.w, right: 30.w),
+          // glowColor: Color(0xB0FFDFB0),
+          borderRadius: BorderRadius.circular(30.r),
+          color: Color(0xB0FFDFB0),
+          child: SingleChildScrollView(
+            child: Column(
               children: [
-                Icon(Icons.location_pin),
-                Text(
-                  " " + currentTemp.location,
+                Container(
+                  child: searchBar
+                      ? TextField(
+                          focusNode: focusNode,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                              fillColor: Colors.white,
+                              filled: true,
+                              hintText: "Enter a city Name"),
+                          textInputAction: TextInputAction.search,
+                          onSubmitted: (value) async {
+                            CityModel temp = await (fetchCity(value));
+                            if (temp == null) {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    backgroundColor: Color(0xff030317),
+                                    title: Text('City not found'),
+                                    content: Text("Please check the city name"),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text("Ok"))
+                                    ],
+                                  );
+                                },
+                              );
+                              searchBar = false;
+                              return;
+                            }
+                            city = temp.name;
+                            lat = temp.lat;
+                            lon = temp.lon;
+                            updating = true;
+                            setState(() {});
+                            widget.updateData();
+                            searchBar = false;
+                            updating = false;
+                            setState(() {});
+                          },
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.location_pin),
+                            GestureDetector(
+                              onTap: () {
+                                searchBar = true;
+                                setState(() {});
+                                focusNode.requestFocus();
+                              },
+                              child: Text(
+                                " " + city,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.sp,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 10.h),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1.w,
+                      color: Colors.black,
+                    ),
+                    borderRadius: BorderRadius.circular(30.r),
+                  ),
+                  child: Text(
+                    updating ? "Updating" : "Updated",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                ),
+                Image(
+                  image: AssetImage(currentTemp.image),
+                  height: 100.h,
+                ),
+                SizedBox(height: 10.h),
+                GlowText(
+                  currentTemp.current.toString(),
                   style: TextStyle(
+                    height: 1.h,
+                    fontSize: 50.sp,
                     fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  currentTemp.name,
+                  style: TextStyle(
                     fontSize: 20.sp,
                   ),
                 ),
+                Text(
+                  currentTemp.day,
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                  ),
+                ),
+                SizedBox(height: 6.h),
+                Divider(
+                  color: Colors.black,
+                  height: 5.h,
+                ),
+                SizedBox(height: 6.h),
+                ExtraWeather(currentTemp),
               ],
             ),
-            Container(
-              margin: EdgeInsets.only(top: 10.h),
-              padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1.w,
-                  color: Colors.black,
-                ),
-                borderRadius: BorderRadius.circular(30.r),
-              ),
-              child: Text(
-                "Updating",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12.sp,
-                ),
-              ),
-            ),
-            Image(
-              image: AssetImage(currentTemp.image),
-              height: 100.h,
-            ),
-            SizedBox(height: 10.h),
-            GlowText(
-              currentTemp.current.toString(),
-              style: TextStyle(
-                height: 1.h,
-                fontSize: 50.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              currentTemp.name,
-              style: TextStyle(
-                fontSize: 20.sp,
-              ),
-            ),
-            Text(
-              currentTemp.day,
-              style: TextStyle(
-                fontSize: 15.sp,
-              ),
-            ),
-            SizedBox(height: 6.h),
-            Divider(
-              color: Colors.black,
-              height: 5.h,
-            ),
-            SizedBox(height: 6.h),
-            ExtraWeather(currentTemp),
-          ],
+          ),
         ),
       ),
     );
