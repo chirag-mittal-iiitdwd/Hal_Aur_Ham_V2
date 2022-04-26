@@ -49,143 +49,147 @@ class _ScanResultState extends State<ScanResult> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Scaffold(
-            backgroundColor: Colors.transparent,
-            extendBodyBehindAppBar: true,
-            drawer: AppDrawer(),
-            appBar: AppBar(
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            Scaffold(
               backgroundColor: Colors.transparent,
-              elevation: 0.0,
-            ),
-            body: Stack(
-              children: [
-                Image.asset(
-                  'Assets/Images/farm_back.jpg',
-                  fit: BoxFit.cover,
-                  height: double.infinity,
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 70.h),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20.w, vertical: 20.h),
-                        child: GlowContainer(
-                            height: 450.h,
+              extendBodyBehindAppBar: true,
+              drawer: AppDrawer(),
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+              ),
+              body: Stack(
+                children: [
+                  Image.asset(
+                    'Assets/Images/farm_back.jpg',
+                    fit: BoxFit.cover,
+                    height: double.infinity,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 40.h),
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20.w, vertical: 20.h),
+                          child: GlowContainer(
+                              height: 420.h,
+                              margin: EdgeInsets.symmetric(
+                                vertical: 2.h,
+                                horizontal: 2.w,
+                              ),
+                              padding: EdgeInsets.only(
+                                  top: 30.h, left: 30.w, right: 30.w),
+                              // glowColor: Color(0xB0FFDFB0),
+                              borderRadius: BorderRadius.circular(30.r),
+                              color: Color(0xB0FFDFB0),
+                              child: Column(children: [
+                                Container(
+                                  height: 350.h,
+                                  width: double.infinity,
+                                  child: Image.file(
+                                    picked_image,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ])),
+                        ),
+                        Container(
+                          //decoration: BoxDecoration(
+                          //  color: Color.fromRGBO(255, 255, 255, 0.8)),
+                          padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                          child: GlowContainer(
                             margin: EdgeInsets.symmetric(
                               vertical: 2.h,
                               horizontal: 2.w,
                             ),
-                            padding: EdgeInsets.only(
-                                top: 30.h, left: 30.w, right: 30.w),
+                            //padding: EdgeInsets.only(
+                            //  top: 30.h, left: 30.w, right: 30.w),
                             // glowColor: Color(0xB0FFDFB0),
                             borderRadius: BorderRadius.circular(30.r),
-                            color: Color(0xB0FFDFB0),
-                            child: Column(children: [
-                              Container(
-                                child: Image.file(
-                                  picked_image,
-                                  fit: BoxFit.fill,
+                            color: Color.fromRGBO(0, 0, 0, 0.6),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 20.h,
                                 ),
-                              ),
-                            ])),
-                      ),
-                      Container(
-                        //decoration: BoxDecoration(
-                        //  color: Color.fromRGBO(255, 255, 255, 0.8)),
-                        padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                        child: GlowContainer(
-                          margin: EdgeInsets.symmetric(
-                            vertical: 2.h,
-                            horizontal: 2.w,
-                          ),
-                          //padding: EdgeInsets.only(
-                          //  top: 30.h, left: 30.w, right: 30.w),
-                          // glowColor: Color(0xB0FFDFB0),
-                          borderRadius: BorderRadius.circular(30.r),
-                          color: Color.fromRGBO(0, 0, 0, 0.6),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 20.h,
-                              ),
-                              Text(
-                                results != null
-                                    ? "Disease: ${results[0]["label"]}"
-                                    : "Loading...",
-                                style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                              ),
-                              SizedBox(
-                                height: 20.h,
-                              ),
-                              Text(
-                                results != null
-                                    ? "Confidence:  ${(results[0]["confidence"] * 100).toStringAsFixed(2)}%"
-                                    : "Loading...",
-                                style: TextStyle(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                              ),
-                              SizedBox(
-                                height: 20.h,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 70.w,
-                                  right: 70.w,
+                                Text(
+                                  results != null
+                                      ? "Disease: ${results[0]["label"]}"
+                                      : "Loading...",
+                                  style: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
                                 ),
-                                child: ListTile(
-                                  title: Text(
-                                    "Video Link",
-                                    style: TextStyle(
-                                        fontSize: 20.sp, color: Colors.white),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                Text(
+                                  results != null
+                                      ? "Confidence:  ${(results[0]["confidence"] * 100).toStringAsFixed(2)}%"
+                                      : "Loading...",
+                                  style: TextStyle(
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 70.w,
+                                    right: 70.w,
                                   ),
-                                  trailing: Icon(
-                                    CupertinoIcons.arrowtriangle_right_square,
-                                    size: 40.sp,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(left: 70.w, right: 70.w),
-                                child: ListTile(
-                                  title: Text(
-                                    "Blog Link",
-                                    style: TextStyle(
-                                      fontSize: 20.sp,
+                                  child: ListTile(
+                                    title: Text(
+                                      "Video Link",
+                                      style: TextStyle(
+                                          fontSize: 20.sp, color: Colors.white),
+                                    ),
+                                    trailing: Icon(
+                                      CupertinoIcons.arrowtriangle_right_square,
+                                      size: 40.sp,
                                       color: Colors.white,
                                     ),
                                   ),
-                                  trailing: Icon(
-                                    Icons.chrome_reader_mode_sharp,
-                                    size: 40.sp,
-                                    color: Colors.white,
-                                  ),
                                 ),
-                              )
-                            ],
+                                Padding(
+                                  padding:
+                                      EdgeInsets.only(left: 70.w, right: 70.w),
+                                  child: ListTile(
+                                    title: Text(
+                                      "Blog Link",
+                                      style: TextStyle(
+                                        fontSize: 20.sp,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    trailing: Icon(
+                                      Icons.chrome_reader_mode_sharp,
+                                      size: 40.sp,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

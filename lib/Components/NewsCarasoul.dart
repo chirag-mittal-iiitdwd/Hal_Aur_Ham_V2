@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hal_aur_ham_v2/Screens/News_Detail_Screen.dart';
 import 'package:provider/provider.dart';
 
 import '../Model/NewsItems.dart';
@@ -8,6 +9,13 @@ import '../Model/NewsItems.dart';
 class NewsCarasoul extends StatefulWidget {
   @override
   State<NewsCarasoul> createState() => _NewsCarasoulState();
+}
+
+String _generateSubstring(String str) {
+  if (str.length < 80) {
+    return str;
+  }
+  return str.substring(0, 80) + "...";
 }
 
 class _NewsCarasoulState extends State<NewsCarasoul> {
@@ -36,10 +44,17 @@ class _NewsCarasoulState extends State<NewsCarasoul> {
                 carouselController: controller,
                 itemCount: newsData.items.length,
                 itemBuilder: (context, index, realIndex) {
-                  return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 12.w),
-                    child: Center(
-                      child: Text(newsData.items[index].news),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(NewsDetail.routeName);
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 12.w),
+                      child: Center(
+                        child: Text(
+                          _generateSubstring(newsData.items[index].news),
+                        ),
+                      ),
                     ),
                   );
                 },

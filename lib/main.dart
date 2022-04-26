@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hal_aur_ham_v2/Screens/News_Detail_Screen.dart';
 import 'package:provider/provider.dart';
 
 import './Model/ProfileModel.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
             CropVizScreen.routeName: (ctx) => CropVizScreen(),
             CropScan.routeName: (ctx) => CropScan(),
             ScanResult.routeName: (ctx) => ScanResult(),
+            NewsDetail.routeName:(ctx)=>NewsDetail(),
           },
         ),
       ),

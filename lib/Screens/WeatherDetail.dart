@@ -10,35 +10,37 @@ class WeatherDetail extends StatelessWidget {
   WeatherDetail(this.tomorrowTemp, this.sevenDay);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Scaffold(
-            body: Stack(
-              children: [
-                Image.asset(
-                  'Assets/Images/farm_back.jpg',
-                  fit: BoxFit.cover,
-                  height: double.infinity,
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                ),
-                Column(
-                  children: [
-                    TomorrowWeather(tomorrowTemp),
-                    SizedBox(
-                      height: 30.h,
-                    ),
-                    SevenDays(sevenDay),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                  ],
-                ),
-              ],
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            Scaffold(
+              body: Stack(
+                children: [
+                  Image.asset(
+                    'Assets/Images/farm_back.jpg',
+                    fit: BoxFit.cover,
+                    height: double.infinity,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                  ),
+                  Column(
+                    children: [
+                      TomorrowWeather(tomorrowTemp),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      SevenDays(sevenDay),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -194,7 +196,7 @@ class SevenDays extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 325.h,
+      height: 300.h,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.r),

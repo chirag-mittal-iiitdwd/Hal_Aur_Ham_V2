@@ -20,56 +20,58 @@ class CropScan extends StatefulWidget {
 class _CropScanState extends State<CropScan> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Scaffold(
-            backgroundColor: Colors.transparent,
-            extendBodyBehindAppBar: true,
-            drawer: AppDrawer(),
-            appBar: AppBar(
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            Scaffold(
               backgroundColor: Colors.transparent,
-              elevation: 0.0,
-            ),
-            body: Stack(
-              children: [
-                Image.asset(
-                  'Assets/Images/farm_back.jpg',
-                  fit: BoxFit.cover,
-                  height: double.infinity,
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 70.h),
-                  child: Column(
-                    children: [
-                      DemoVideo(),
-                      Container(
-                        height: 60.h,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(0, 0, 0, 0.65),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 15.h),
-                          child: Text(
-                            "Check Out Previous Scans",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                            textAlign: TextAlign.center,
-                            textScaleFactor: 1.6.h,
-                          ),
-                        ),
-                      )
-                    ],
+              extendBodyBehindAppBar: true,
+              drawer: AppDrawer(),
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+              ),
+              body: Stack(
+                children: [
+                  Image.asset(
+                    'Assets/Images/farm_back.jpg',
+                    fit: BoxFit.cover,
+                    height: double.infinity,
+                    width: double.infinity,
+                    alignment: Alignment.center,
                   ),
-                )
-              ],
+                  Container(
+                    margin: EdgeInsets.only(top: 70.h),
+                    child: Column(
+                      children: [
+                        DemoVideo(),
+                        Container(
+                          height: 60.h,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(0, 0, 0, 0.65),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 15.h),
+                            child: Text(
+                              "Check Out Previous Scans",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
+                              textScaleFactor: 1.6.h,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

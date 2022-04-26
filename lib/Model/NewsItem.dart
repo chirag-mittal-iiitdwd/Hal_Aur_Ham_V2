@@ -1,4 +1,5 @@
 class News {
   final String news;
-  News({this.news});
+  final String description;
+  News({this.news,this.description});
 }

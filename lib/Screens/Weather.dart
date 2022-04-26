@@ -63,45 +63,47 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Scaffold(
-            backgroundColor: Colors.transparent,
-            extendBodyBehindAppBar: true,
-            drawer: AppDrawer(),
-            appBar: AppBar(
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            Scaffold(
               backgroundColor: Colors.transparent,
-              elevation: 0.0,
-            ),
-            body: Stack(
-              children: [
-                Image.asset(
-                  'Assets/Images/farm_back.jpg',
-                  fit: BoxFit.cover,
-                  height: double.infinity,
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 70.h),
-                  child: currentTemp == null
-                      ? Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              CurrentWeather(getData),
-                              TodayWeather(),
-                            ],
+              extendBodyBehindAppBar: true,
+              drawer: AppDrawer(),
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+              ),
+              body: Stack(
+                children: [
+                  Image.asset(
+                    'Assets/Images/farm_back.jpg',
+                    fit: BoxFit.cover,
+                    height: double.infinity,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 40.h),
+                    child: currentTemp == null
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                CurrentWeather(getData),
+                                TodayWeather(),
+                              ],
+                            ),
                           ),
-                        ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
