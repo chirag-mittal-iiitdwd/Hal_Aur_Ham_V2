@@ -109,7 +109,7 @@ class Profile extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: 10.h,
+                          height: 8.h,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
