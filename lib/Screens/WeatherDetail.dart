@@ -54,7 +54,7 @@ class TomorrowWeather extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: GlowContainer(
-        margin: EdgeInsets.only(top: 40.h),
+        margin: EdgeInsets.only(top: 25.h),
         color: Color(0xB0FFDFB0),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(30.r),

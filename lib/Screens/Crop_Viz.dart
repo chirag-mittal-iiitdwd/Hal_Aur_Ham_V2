@@ -35,7 +35,7 @@ class CropVizScreen extends StatelessWidget {
                   ),
                   Container(
                     margin: EdgeInsets.only(
-                      top: 50.h,
+                      top: 40.h,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +63,7 @@ class CropVizScreen extends StatelessWidget {
                             vertical: 15.h,
                             horizontal: 15.w,
                           ),
-                          height: 650.h,
+                          height: 630.h,
                           child: Column(
                             children: [
                               Container(
