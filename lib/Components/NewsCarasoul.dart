@@ -15,7 +15,7 @@ String _generateSubstring(String str) {
   if (str.length < 80) {
     return str;
   }
-  return str.substring(0, 80) + "...";
+  return str.substring(0, 80);
 }
 
 class _NewsCarasoulState extends State<NewsCarasoul> {
@@ -46,7 +46,7 @@ class _NewsCarasoulState extends State<NewsCarasoul> {
                 itemBuilder: (context, index, realIndex) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed(NewsDetail.routeName);
+                      Navigator.of(context).pushNamed(NewsDetail.routeName,arguments: {'headline':newsData.items[index].news,'description':newsData.items[index].description});
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 12.w),

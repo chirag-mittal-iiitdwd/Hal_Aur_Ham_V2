@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
             CropVizScreen.routeName: (ctx) => CropVizScreen(),
             CropScan.routeName: (ctx) => CropScan(),
             ScanResult.routeName: (ctx) => ScanResult(),
-            NewsDetail.routeName:(ctx)=>NewsDetail(),
+            NewsDetail.routeName: (ctx) => NewsDetail(),
           },
         ),
       ),
