@@ -5,6 +5,7 @@ import 'package:hal_aur_ham_v2/Screens/Crop_Viz.dart';
 import 'package:hal_aur_ham_v2/Screens/Drone_Status.dart';
 import 'package:hal_aur_ham_v2/Screens/Login_Register.dart';
 import 'package:hal_aur_ham_v2/Screens/Profile_Screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../Screens/WelcomeScreen.dart';
 import '../Screens/Weather.dart';
@@ -12,6 +13,18 @@ import '../Screens/Weather.dart';
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    void logOut() async {
+      await FirebaseAuth.instance.signOut();
+      Navigator.popUntil(context, (route) => route.isFirst);
+      Navigator.pushReplacement(
+        context, 
+        MaterialPageRoute(
+          builder: (context) => LoginRegister(),
+        ),
+      );
+    }
+
     return Drawer(
       child: Stack(
         children: [
@@ -163,20 +176,23 @@ class AppDrawer extends StatelessWidget {
                       Navigator.of(context)
                           .pushReplacementNamed(LoginRegister.routeName);
                     },
-                    child: Row(
-                      children: [
-                        Text(
-                          "Logout  ",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 22.sp,
+                    child: GestureDetector(
+                      onTap: logOut,
+                      child: Row(
+                        children: [
+                          Text(
+                            "Logout  ",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22.sp,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.logout,
-                          color: Colors.black,
-                        )
-                      ],
+                          Icon(
+                            Icons.logout,
+                            color: Colors.black,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],

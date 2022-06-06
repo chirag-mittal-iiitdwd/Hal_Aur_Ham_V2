@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hal_aur_ham_v2/Screens/News_Detail_Screen.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import './Model/ProfileModel.dart';
 import './Screens/Crop_Scan.dart';
@@ -17,7 +19,9 @@ import './Screens/Login_Register.dart';
 import './Model/NewsItems.dart';
 import './Screens/WelcomeScreen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -41,7 +45,7 @@ class MyApp extends StatelessWidget {
             fontFamily: GoogleFonts.montserrat().fontFamily,
             primarySwatch: Colors.blue,
           ),
-          home: LoginRegister(),
+          home: (FirebaseAuth.instance.currentUser != null) ? WelcomeScreen() : LoginRegister(),
           routes: {
             WelcomeScreen.routName: (ctx) => WelcomeScreen(),
             WeatherScreen.routeName: (ctx) => WeatherScreen(),

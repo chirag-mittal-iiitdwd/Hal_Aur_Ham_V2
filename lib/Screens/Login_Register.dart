@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hal_aur_ham_v2/Screens/WelcomeScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hal_aur_ham_v2/Screens/Verify_otp_screen.dart';
 
 enum AuthMode { Login, Register }
 
@@ -13,6 +16,44 @@ class LoginRegister extends StatefulWidget {
 class _LoginRegisterState extends State<LoginRegister> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.Login;
+  String _phoneNumber;
+  String _aadharNumber;
+
+  void sendOTP() async {
+    String phone = "+91" + _phoneNumber.trim();
+
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: phone,
+      codeSent: (verificationId, resendToken) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => VerifyOtpScreen(
+              verificationId: verificationId,
+            ),
+          ),
+        );
+      },
+      verificationCompleted: (credential) {},
+      verificationFailed: (ex) {
+        log(ex.code.toString());
+      },
+      codeAutoRetrievalTimeout: (verificationId) {},
+      timeout: Duration(seconds: 120),
+    );
+  }
+
+  void _trySubmit() {
+    FocusScope.of(context).unfocus();
+    final isVaild = _formKey.currentState.validate();
+    if (isVaild) {
+      _formKey.currentState.save();
+      sendOTP();
+      print(_phoneNumber);
+      print(_aadharNumber);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,7 +99,9 @@ class _LoginRegisterState extends State<LoginRegister> {
                               top: 5.h,
                             ),
                             child: Text(
-                              _authMode == AuthMode.Login ? 'Login' : 'Register',
+                              _authMode == AuthMode.Login
+                                  ? 'Login'
+                                  : 'Register',
                               style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w900,
@@ -78,8 +121,18 @@ class _LoginRegisterState extends State<LoginRegister> {
                                     horizontal: 35.w,
                                     vertical: 8.h,
                                   ),
-                                  child: TextField(
-                                    keyboardType: TextInputType.number,
+                                  child: TextFormField(
+                                    key: ValueKey('phone'),
+                                    validator: (value) {
+                                      if (value.length == 10) {
+                                        return null;
+                                      }
+                                      return 'Phone number should be exactly 10 digits long';
+                                    },
+                                    onSaved: (value) {
+                                      _phoneNumber = value;
+                                    },
+                                    keyboardType: TextInputType.phone,
                                     autofocus: false,
                                     style: TextStyle(
                                       fontSize: 15.sp,
@@ -99,12 +152,14 @@ class _LoginRegisterState extends State<LoginRegister> {
                                         borderSide: BorderSide(
                                           color: Color(0x99FFDFB0),
                                         ),
-                                        borderRadius: BorderRadius.circular(10.r),
+                                        borderRadius:
+                                            BorderRadius.circular(10.r),
                                       ),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide:
                                             BorderSide(color: Colors.grey),
-                                        borderRadius: BorderRadius.circular(10.0),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
                                       ),
                                     ),
                                   ),
@@ -115,8 +170,18 @@ class _LoginRegisterState extends State<LoginRegister> {
                                       horizontal: 35.w,
                                       vertical: 8.h,
                                     ),
-                                    child: TextField(
-                                      keyboardType: TextInputType.number,
+                                    child: TextFormField(
+                                      key: ValueKey('aadhar'),
+                                      validator: (value) {
+                                        if (value.length == 12) {
+                                          return null;
+                                        }
+                                        return 'Aadhar Number Should Be Exactly 12 digits long';
+                                      },
+                                      onSaved: (value) {
+                                        _aadharNumber = value;
+                                      },
+                                      keyboardType: TextInputType.phone,
                                       autofocus: false,
                                       style: TextStyle(
                                         fontSize: 15.sp,
@@ -148,89 +213,92 @@ class _LoginRegisterState extends State<LoginRegister> {
                                       ),
                                     ),
                                   ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 35.w,
-                                    vertical: 8.h,
-                                  ),
-                                  child: TextField(
-                                    keyboardType: TextInputType.visiblePassword,
-                                    autofocus: false,
-                                    style: TextStyle(
-                                      fontSize: 15.sp,
-                                      color: Colors.black,
-                                    ),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: 'Password',
-                                      filled: true,
-                                      fillColor: Color(0x99FFDFB0),
-                                      contentPadding: const EdgeInsets.only(
-                                        left: 14.0,
-                                        bottom: 6.0,
-                                        top: 8.0,
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x99FFDFB0),
-                                        ),
-                                        borderRadius: BorderRadius.circular(10.r),
-                                      ),
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.grey),
-                                        borderRadius: BorderRadius.circular(10.r),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                if (_authMode == AuthMode.Register)
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 35.w,
-                                      vertical: 8.h,
-                                    ),
-                                    child: TextField(
-                                      keyboardType: TextInputType.number,
-                                      autofocus: false,
-                                      style: TextStyle(
-                                        fontSize: 15.sp,
-                                        color: Colors.black,
-                                      ),
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: 'Confirm Password',
-                                        filled: true,
-                                        fillColor: Color(0x99FFDFB0),
-                                        contentPadding: const EdgeInsets.only(
-                                          left: 14,
-                                          bottom: 6.0,
-                                          top: 8.0,
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x99FFDFB0),
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(10.r),
-                                        ),
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(10.r),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                // Padding(
+                                //   padding: EdgeInsets.symmetric(
+                                //     horizontal: 35.w,
+                                //     vertical: 8.h,
+                                //   ),
+                                //   child: TextField(
+                                //     keyboardType: TextInputType.visiblePassword,
+                                //     autofocus: false,
+                                //     style: TextStyle(
+                                //       fontSize: 15.sp,
+                                //       color: Colors.black,
+                                //     ),
+                                //     decoration: InputDecoration(
+                                //       border: InputBorder.none,
+                                //       hintText: 'Password',
+                                //       filled: true,
+                                //       fillColor: Color(0x99FFDFB0),
+                                //       contentPadding: const EdgeInsets.only(
+                                //         left: 14.0,
+                                //         bottom: 6.0,
+                                //         top: 8.0,
+                                //       ),
+                                //       focusedBorder: OutlineInputBorder(
+                                //         borderSide: BorderSide(
+                                //           color: Color(0x99FFDFB0),
+                                //         ),
+                                //         borderRadius:
+                                //             BorderRadius.circular(10.r),
+                                //       ),
+                                //       enabledBorder: UnderlineInputBorder(
+                                //         borderSide:
+                                //             BorderSide(color: Colors.grey),
+                                //         borderRadius:
+                                //             BorderRadius.circular(10.r),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                                // if (_authMode == AuthMode.Register)
+                                //   Padding(
+                                //     padding: EdgeInsets.symmetric(
+                                //       horizontal: 35.w,
+                                //       vertical: 8.h,
+                                //     ),
+                                //     child: TextField(
+                                //       keyboardType: TextInputType.number,
+                                //       autofocus: false,
+                                //       style: TextStyle(
+                                //         fontSize: 15.sp,
+                                //         color: Colors.black,
+                                //       ),
+                                //       decoration: InputDecoration(
+                                //         border: InputBorder.none,
+                                //         hintText: 'Confirm Password',
+                                //         filled: true,
+                                //         fillColor: Color(0x99FFDFB0),
+                                //         contentPadding: const EdgeInsets.only(
+                                //           left: 14,
+                                //           bottom: 6.0,
+                                //           top: 8.0,
+                                //         ),
+                                //         focusedBorder: OutlineInputBorder(
+                                //           borderSide: BorderSide(
+                                //             color: Color(0x99FFDFB0),
+                                //           ),
+                                //           borderRadius:
+                                //               BorderRadius.circular(10.r),
+                                //         ),
+                                //         enabledBorder: UnderlineInputBorder(
+                                //           borderSide:
+                                //               BorderSide(color: Colors.grey),
+                                //           borderRadius:
+                                //               BorderRadius.circular(10.r),
+                                //         ),
+                                //       ),
+                                //     ),
+                                //   ),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     primary: Color(0xff0876B5),
                                   ),
-                                  onPressed: () {
-                                    Navigator.of(context).pushReplacementNamed(
-                                        WelcomeScreen.routName);
-                                  },
+                                  onPressed: _trySubmit
+                                  // Navigator.of(context).pushReplacementNamed(
+                                  //     WelcomeScreen.routName);
+                                  // _trySubmit;
+                                  ,
                                   child: Text("Submit"),
                                 ),
                               ],

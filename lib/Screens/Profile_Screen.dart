@@ -2,14 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hal_aur_ham_v2/Screens/Login_Register.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../Components/App_Drawer.dart';
 import '../Model/ProfileModel.dart';
 
 class Profile extends StatelessWidget {
   static const routeName = '/profile';
+  
   @override
   Widget build(BuildContext context) {
+    void logOut() async {
+      await FirebaseAuth.instance.signOut();
+      Navigator.popUntil(context, (route) => route.isFirst);
+      Navigator.pushReplacement(
+        context, 
+        MaterialPageRoute(
+          builder: (context) => LoginRegister(),
+        ),
+      );
+    }
+
     final profileData = Provider.of<UserProfile>(context);
     return SafeArea(
       child: Scaffold(
@@ -160,20 +173,23 @@ class Profile extends StatelessWidget {
                                 Navigator.of(context).pushReplacementNamed(
                                     LoginRegister.routeName);
                               },
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Logout  ",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 22.sp,
+                              child: GestureDetector(
+                                onTap: logOut,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Logout  ",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 22.sp,
+                                      ),
                                     ),
-                                  ),
-                                  Icon(
-                                    Icons.logout,
-                                    color: Colors.black,
-                                  )
-                                ],
+                                    Icon(
+                                      Icons.logout,
+                                      color: Colors.black,
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ],
