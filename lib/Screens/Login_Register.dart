@@ -17,7 +17,7 @@ class _LoginRegisterState extends State<LoginRegister> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.Login;
   String _phoneNumber;
-  String _aadharNumber;
+  // String _aadharNumber;
 
   void sendOTP() async {
     String phone = "+91" + _phoneNumber.trim();
@@ -50,7 +50,7 @@ class _LoginRegisterState extends State<LoginRegister> {
       _formKey.currentState.save();
       sendOTP();
       print(_phoneNumber);
-      print(_aadharNumber);
+      // print(_aadharNumber);
     }
   }
 
@@ -77,18 +77,6 @@ class _LoginRegisterState extends State<LoginRegister> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          // Container(
-                          //   margin: EdgeInsets.only(
-                          //     top: 25.h,
-                          //   ),
-                          //   child: Text(
-                          //     'Hal Aur Ham',
-                          //     style: TextStyle(
-                          //       fontSize: 18.sp,
-                          //       fontWeight: FontWeight.w900,
-                          //     ),
-                          //   ),
-                          // ),
                           Container(
                             padding: EdgeInsets.symmetric(horizontal: 80.w),
                             margin: EdgeInsets.only(top: 10.h),
@@ -164,101 +152,24 @@ class _LoginRegisterState extends State<LoginRegister> {
                                     ),
                                   ),
                                 ),
-                                if (_authMode == AuthMode.Register)
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 35.w,
-                                      vertical: 8.h,
-                                    ),
-                                    child: TextFormField(
-                                      key: ValueKey('aadhar'),
-                                      validator: (value) {
-                                        if (value.length == 12) {
-                                          return null;
-                                        }
-                                        return 'Aadhar Number Should Be Exactly 12 digits long';
-                                      },
-                                      onSaved: (value) {
-                                        _aadharNumber = value;
-                                      },
-                                      keyboardType: TextInputType.phone,
-                                      autofocus: false,
-                                      style: TextStyle(
-                                        fontSize: 15.sp,
-                                        color: Colors.black,
-                                      ),
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: 'Aadhar Number',
-                                        filled: true,
-                                        fillColor: Color(0x99FFDFB0),
-                                        contentPadding: const EdgeInsets.only(
-                                          left: 14.0,
-                                          bottom: 6.0,
-                                          top: 8.0,
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x99FFDFB0),
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(10.r),
-                                        ),
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(10.r),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                // Padding(
-                                //   padding: EdgeInsets.symmetric(
-                                //     horizontal: 35.w,
-                                //     vertical: 8.h,
-                                //   ),
-                                //   child: TextField(
-                                //     keyboardType: TextInputType.visiblePassword,
-                                //     autofocus: false,
-                                //     style: TextStyle(
-                                //       fontSize: 15.sp,
-                                //       color: Colors.black,
-                                //     ),
-                                //     decoration: InputDecoration(
-                                //       border: InputBorder.none,
-                                //       hintText: 'Password',
-                                //       filled: true,
-                                //       fillColor: Color(0x99FFDFB0),
-                                //       contentPadding: const EdgeInsets.only(
-                                //         left: 14.0,
-                                //         bottom: 6.0,
-                                //         top: 8.0,
-                                //       ),
-                                //       focusedBorder: OutlineInputBorder(
-                                //         borderSide: BorderSide(
-                                //           color: Color(0x99FFDFB0),
-                                //         ),
-                                //         borderRadius:
-                                //             BorderRadius.circular(10.r),
-                                //       ),
-                                //       enabledBorder: UnderlineInputBorder(
-                                //         borderSide:
-                                //             BorderSide(color: Colors.grey),
-                                //         borderRadius:
-                                //             BorderRadius.circular(10.r),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
                                 // if (_authMode == AuthMode.Register)
                                 //   Padding(
                                 //     padding: EdgeInsets.symmetric(
                                 //       horizontal: 35.w,
                                 //       vertical: 8.h,
                                 //     ),
-                                //     child: TextField(
-                                //       keyboardType: TextInputType.number,
+                                //     child: TextFormField(
+                                //       key: ValueKey('aadhar'),
+                                //       validator: (value) {
+                                //         if (value.length == 12) {
+                                //           return null;
+                                //         }
+                                //         return 'Aadhar Number Should Be Exactly 12 digits long';
+                                //       },
+                                //       onSaved: (value) {
+                                //         _aadharNumber = value;
+                                //       },
+                                //       keyboardType: TextInputType.phone,
                                 //       autofocus: false,
                                 //       style: TextStyle(
                                 //         fontSize: 15.sp,
@@ -266,11 +177,11 @@ class _LoginRegisterState extends State<LoginRegister> {
                                 //       ),
                                 //       decoration: InputDecoration(
                                 //         border: InputBorder.none,
-                                //         hintText: 'Confirm Password',
+                                //         hintText: 'Aadhar Number',
                                 //         filled: true,
                                 //         fillColor: Color(0x99FFDFB0),
                                 //         contentPadding: const EdgeInsets.only(
-                                //           left: 14,
+                                //           left: 14.0,
                                 //           bottom: 6.0,
                                 //           top: 8.0,
                                 //         ),
@@ -294,11 +205,7 @@ class _LoginRegisterState extends State<LoginRegister> {
                                   style: ElevatedButton.styleFrom(
                                     primary: Color(0xff0876B5),
                                   ),
-                                  onPressed: _trySubmit
-                                  // Navigator.of(context).pushReplacementNamed(
-                                  //     WelcomeScreen.routName);
-                                  // _trySubmit;
-                                  ,
+                                  onPressed: _trySubmit,
                                   child: Text("Submit"),
                                 ),
                               ],
@@ -356,31 +263,31 @@ class _LoginRegisterState extends State<LoginRegister> {
                     ),
                   ),
                 ),
-                footer: FlatButton(
-                  color: Color(0x8A1A6114),
-                  child: GridTileBar(
-                    title: Text(
-                      _authMode == AuthMode.Register
-                          ? 'Login Instead'
-                          : 'Register Instead',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22.sp,
-                      ),
-                    ),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      if (_authMode == AuthMode.Login) {
-                        _authMode = AuthMode.Register;
-                      } else {
-                        _authMode = AuthMode.Login;
-                      }
-                    });
-                  },
-                ),
+                // footer: FlatButton(
+                //   color: Color(0x8A1A6114),
+                //   child: GridTileBar(
+                //     title: Text(
+                //       _authMode == AuthMode.Register
+                //           ? 'Login Instead'
+                //           : 'Register Instead',
+                //       textAlign: TextAlign.center,
+                //       style: TextStyle(
+                //         color: Colors.black,
+                //         fontWeight: FontWeight.bold,
+                //         fontSize: 22.sp,
+                //       ),
+                //     ),
+                //   ),
+                //   onPressed: () {
+                //     setState(() {
+                //       if (_authMode == AuthMode.Login) {
+                //         _authMode = AuthMode.Register;
+                //       } else {
+                //         _authMode = AuthMode.Login;
+                //       }
+                //     });
+                //   },
+                // ),
               ),
             ),
           ],

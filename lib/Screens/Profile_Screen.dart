@@ -1,29 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hal_aur_ham_v2/Screens/Login_Register.dart';
-import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../Components/App_Drawer.dart';
-import '../Model/ProfileModel.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   static const routeName = '/profile';
-  
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  bool _isLoading = false;
+  String userName = '';
+  String aadhar = '';
+  String phone = '';
+
+  void yourFunction(BuildContext context) async {
+    setState(() {
+      _isLoading = true;
+    });
+    final uid = FirebaseAuth.instance.currentUser.uid;
+    final currentUserData =
+        await FirebaseFirestore.instance.doc('users/' + uid).get();
+    userName = currentUserData['name'];
+    aadhar = currentUserData['aadhar'];
+    phone = currentUserData['phone'];
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => yourFunction(context));
+  }
+
   @override
   Widget build(BuildContext context) {
     void logOut() async {
       await FirebaseAuth.instance.signOut();
       Navigator.popUntil(context, (route) => route.isFirst);
       Navigator.pushReplacement(
-        context, 
+        context,
         MaterialPageRoute(
           builder: (context) => LoginRegister(),
         ),
       );
     }
 
-    final profileData = Provider.of<UserProfile>(context);
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -53,149 +83,156 @@ class Profile extends StatelessWidget {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 50.h),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.symmetric(
-                            horizontal: 28.w,
-                          ),
-                          child: Text(
-                            'Your Profile',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 25.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 30.h,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              radius: 110.r,
-                              backgroundImage: NetworkImage(
-                                profileData.user.imgUrl,
-                              ),
-                              backgroundColor: Colors.transparent,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 30.h,
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 28.w),
-                          height: 270.h,
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.r),
-                            ),
-                            color: Color(0xa8FFDFB0),
-                            child: Column(
-                              children: [
-                                ProfileItem(
-                                  featureContent: profileData.user.name,
-                                  featureText: 'Name',
-                                  iconName: Icon(Icons.person),
+                    child: _isLoading
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: 28.w,
                                 ),
-                                ProfileItem(
-                                  featureContent: profileData.user.aadhar,
-                                  featureText: 'Aadhar',
-                                  iconName: Icon(Icons.credit_card),
-                                ),
-                                ProfileItem(
-                                  featureContent: profileData.user.mobile,
-                                  featureText: 'Phone No',
-                                  iconName: Icon(Icons.phone),
-                                ),
-                                ProfileItem(
-                                  featureContent: profileData.user.address,
-                                  featureText: 'Location',
-                                  iconName: Icon(Icons.location_pin),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.green[800],
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.r),
-                                ),
-                              ),
-                              onPressed: () {
-                                // Navigator.of(context).pushReplacementNamed(
-                                //     LoginRegister.routeName);
-                              },
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Change Location  ",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 22.sp,
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.location_pin,
+                                child: Text(
+                                  'Your Profile',
+                                  style: TextStyle(
                                     color: Colors.black,
-                                  )
+                                    fontSize: 25.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 30.h,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 110.r,
+                                    backgroundImage: NetworkImage(
+                                      'https://images.nightcafe.studio//assets/profile.png?tr=w-1600,c-at_max',
+                                    ),
+                                    backgroundColor: Colors.transparent,
+                                  ),
                                 ],
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.red[800],
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.r),
+                              SizedBox(
+                                height: 30.h,
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 28.w),
+                                height: 270.h,
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.r),
+                                  ),
+                                  color: Color(0xa8FFDFB0),
+                                  child: Column(
+                                    children: [
+                                      ProfileItem(
+                                        featureContent: userName,
+                                        featureText: 'Name',
+                                        iconName: Icon(Icons.person),
+                                      ),
+                                      ProfileItem(
+                                        featureContent: aadhar,
+                                        featureText: 'Aadhar',
+                                        iconName: Icon(Icons.credit_card),
+                                      ),
+                                      ProfileItem(
+                                        featureContent: phone,
+                                        featureText: 'Phone No',
+                                        iconName: Icon(Icons.phone),
+                                      ),
+                                      ProfileItem(
+                                        featureContent: 'To be Updated...',
+                                        featureText: 'Location',
+                                        iconName: Icon(Icons.location_pin),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                              onPressed: () {
-                                Navigator.of(context).pushReplacementNamed(
-                                    LoginRegister.routeName);
-                              },
-                              child: GestureDetector(
-                                onTap: logOut,
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Logout  ",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 22.sp,
+                              SizedBox(
+                                height: 8.h,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.green[800],
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.r),
                                       ),
                                     ),
-                                    Icon(
-                                      Icons.logout,
-                                      color: Colors.black,
-                                    )
-                                  ],
-                                ),
+                                    onPressed: () {
+                                      // Navigator.of(context).pushReplacementNamed(
+                                      //     LoginRegister.routeName);
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "Change Location  ",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 22.sp,
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.location_pin,
+                                          color: Colors.black,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                              SizedBox(
+                                height: 1.h,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.red[800],
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.r),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pushReplacementNamed(
+                                              LoginRegister.routeName);
+                                    },
+                                    child: GestureDetector(
+                                      onTap: logOut,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Logout  ",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 22.sp,
+                                            ),
+                                          ),
+                                          Icon(
+                                            Icons.logout,
+                                            color: Colors.black,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                   ),
                 ],
               ),
