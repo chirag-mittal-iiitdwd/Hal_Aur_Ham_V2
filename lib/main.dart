@@ -6,6 +6,7 @@ import 'package:hal_aur_ham_v2/Screens/News_Detail_Screen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'Screens/Loading_Screen.dart';
 
 import './Model/ProfileModel.dart';
 import './Screens/Crop_Scan.dart';
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
             ScanResult.routeName: (ctx) => ScanResult(),
             NewsDetail.routeName: (ctx) => NewsDetail(),
             chooseCrop.routeName: (ctx) => chooseCrop(),
+            LoadingScreen.routeName: (ctx) => LoadingScreen(),
           },
         ),
       ),

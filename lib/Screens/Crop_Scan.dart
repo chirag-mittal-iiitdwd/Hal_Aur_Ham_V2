@@ -6,13 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hal_aur_ham_v2/Components/App_Drawer.dart';
+import 'package:hal_aur_ham_v2/Screens/Drone_Status.dart';
+import 'package:hal_aur_ham_v2/Screens/Loading_Screen.dart';
 import 'package:hal_aur_ham_v2/Screens/Scan_Result.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
 ImagePicker picker = ImagePicker();
 var picked_image;
-var resJson;
+var isAnomaly;
+var isLoading = false;
 
 class CropScan extends StatefulWidget {
   static const routeName = '/cropScan';
@@ -87,6 +90,10 @@ class DemoVideo extends StatefulWidget {
 
 class _DemoVideoState extends State<DemoVideo> {
   onUploadImage() async {
+    setState(() {
+      isLoading = true;
+      Navigator.of(context).pushNamed(LoadingScreen.routeName);
+    });
     var request = http.MultipartRequest(
       'POST',
       Uri.parse("https://anomaly1291.herokuapp.com/predict/image"),
@@ -104,11 +111,13 @@ class _DemoVideoState extends State<DemoVideo> {
     print("request: " + request.toString());
     var res = await request.send();
     http.Response response = await http.Response.fromStream(res);
-    setState(() {
-      resJson = jsonDecode(response.body);
-      print(resJson);
-      Navigator.of(context).pushReplacementNamed(ScanResult.routeName);
-    });
+    setState(
+      () {
+        isLoading = false;
+        isAnomaly = jsonDecode(response.body);
+        Navigator.of(context).pushReplacementNamed(ScanResult.routeName);
+      },
+    );
   }
 
   Future openCamera() async {
@@ -127,11 +136,11 @@ class _DemoVideoState extends State<DemoVideo> {
     );
     picked_image = File(gallery_img.path);
     if (picked_image != null) {
-      Navigator.of(context).pushReplacementNamed(ScanResult.routeName);
+      onUploadImage();
     }
   }
 
-  void showErrorDialog() {
+  void UploadImageDialog() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -200,7 +209,7 @@ class _DemoVideoState extends State<DemoVideo> {
                 'Assets/Images/ScanCamera.png',
               ),
               iconSize: 100.h,
-              onPressed: showErrorDialog,
+              onPressed: UploadImageDialog,
             ),
           ],
         ),

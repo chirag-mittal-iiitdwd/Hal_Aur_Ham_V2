@@ -1,10 +1,9 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unused_import
 
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hal_aur_ham_v2/Components/App_Drawer.dart';
@@ -110,7 +109,7 @@ class _ScanResultState extends State<ScanResult> {
                             ),
                             borderRadius: BorderRadius.circular(30.r),
                             color: Color.fromRGBO(0, 0, 0, 0.6),
-                            child: resJson == 'Anomaly'
+                            child: isAnomaly == 'Anomaly'
                                 ? Column(
                                     children: [
                                       SizedBox(
@@ -118,7 +117,7 @@ class _ScanResultState extends State<ScanResult> {
                                         width: double.infinity,
                                       ),
                                       Text(
-                                        resJson != null
+                                        isAnomaly != null
                                             ? "This isn't a leaf, is this?"
                                             : "Loading...",
                                         style: TextStyle(
@@ -235,5 +234,12 @@ class _ScanResultState extends State<ScanResult> {
         ),
       ),
     );
+  }
+}
+
+class Loading extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

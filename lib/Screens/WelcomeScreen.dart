@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
-import 'package:hal_aur_ham_v2/Screens/Crop_Scan.dart';
 import 'package:hal_aur_ham_v2/Screens/Crop_Viz.dart';
 import 'package:hal_aur_ham_v2/Screens/Drone_Status.dart';
 import 'package:hal_aur_ham_v2/Screens/Weather.dart';
