@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
 import 'package:hal_aur_ham_v2/Screens/Crop_Scan.dart';
 import 'package:hal_aur_ham_v2/Screens/Crop_Viz.dart';
 import 'package:hal_aur_ham_v2/Screens/Drone_Status.dart';
@@ -159,7 +160,7 @@ class AppDrawer extends StatelessWidget {
                   color: Colors.black,
                 ),
                 onTap: () {
-                  Navigator.of(context).pushNamed(CropScan.routeName);
+                  Navigator.of(context).pushNamed(chooseCrop.routeName);
                 },
               ),
               Row(

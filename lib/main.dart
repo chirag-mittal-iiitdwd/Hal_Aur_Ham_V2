@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
 import 'package:hal_aur_ham_v2/Screens/News_Detail_Screen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -45,7 +46,9 @@ class MyApp extends StatelessWidget {
             fontFamily: GoogleFonts.montserrat().fontFamily,
             primarySwatch: Colors.blue,
           ),
-          home: (FirebaseAuth.instance.currentUser != null) ? WelcomeScreen() : LoginRegister(),
+          home: (FirebaseAuth.instance.currentUser != null)
+              ? WelcomeScreen()
+              : LoginRegister(),
           routes: {
             WelcomeScreen.routName: (ctx) => WelcomeScreen(),
             WeatherScreen.routeName: (ctx) => WeatherScreen(),
@@ -56,6 +59,7 @@ class MyApp extends StatelessWidget {
             CropScan.routeName: (ctx) => CropScan(),
             ScanResult.routeName: (ctx) => ScanResult(),
             NewsDetail.routeName: (ctx) => NewsDetail(),
+            chooseCrop.routeName: (ctx) => chooseCrop(),
           },
         ),
       ),

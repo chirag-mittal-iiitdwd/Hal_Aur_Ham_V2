@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, non_constant_identifier_names, use_key_in_widget_constructors
+// ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, non_constant_identifier_names, use_key_in_widget_constructors, unnecessary_new
 
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
@@ -7,9 +8,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hal_aur_ham_v2/Components/App_Drawer.dart';
 import 'package:hal_aur_ham_v2/Screens/Scan_Result.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
 ImagePicker picker = ImagePicker();
 var picked_image;
+var resJson;
 
 class CropScan extends StatefulWidget {
   static const routeName = '/cropScan';
@@ -77,73 +80,103 @@ class _CropScanState extends State<CropScan> {
   }
 }
 
-class DemoVideo extends StatelessWidget {
+class DemoVideo extends StatefulWidget {
+  @override
+  State<DemoVideo> createState() => _DemoVideoState();
+}
+
+class _DemoVideoState extends State<DemoVideo> {
+  onUploadImage() async {
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse("https://anomaly1291.herokuapp.com/predict/image"),
+    );
+    Map<String, String> headers = {"Content-type": "multipart/form-data"};
+    request.files.add(
+      http.MultipartFile(
+        'file',
+        picked_image.readAsBytes().asStream(),
+        picked_image.lengthSync(),
+        filename: picked_image.path.split('/').last,
+      ),
+    );
+    request.headers.addAll(headers);
+    print("request: " + request.toString());
+    var res = await request.send();
+    http.Response response = await http.Response.fromStream(res);
+    setState(() {
+      resJson = jsonDecode(response.body);
+      print(resJson);
+      Navigator.of(context).pushReplacementNamed(ScanResult.routeName);
+    });
+  }
+
+  Future openCamera() async {
+    final camera_img = await picker.pickImage(
+      source: ImageSource.camera,
+    );
+    picked_image = File(camera_img.path);
+    if (picked_image != null) {
+      onUploadImage();
+    }
+  }
+
+  Future openGallery() async {
+    final gallery_img = await picker.pickImage(
+      source: ImageSource.gallery,
+    );
+    picked_image = File(gallery_img.path);
+    if (picked_image != null) {
+      Navigator.of(context).pushReplacementNamed(ScanResult.routeName);
+    }
+  }
+
+  void showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        actions: [
+          Column(
+            children: [
+              TextButton(
+                onPressed: openGallery,
+                child: Container(
+                  width: double.infinity,
+                  child: Text(
+                    'Select Image From Gallery',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: openCamera,
+                child: Container(
+                  width: double.infinity,
+                  child: Text(
+                    'Capture New Image',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Container(
+                  width: double.infinity,
+                  child: Text(
+                    'Cancel',
+                    textAlign: TextAlign.right,
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    Future openGallery() async {
-      final gallery_img = await picker.pickImage(
-        source: ImageSource.gallery,
-      );
-      picked_image = File(gallery_img.path);
-      if (picked_image != null) {
-        Navigator.of(context).pushReplacementNamed(ScanResult.routeName);
-      }
-    }
-
-    Future openCamera() async {
-      final camera_img = await picker.pickImage(
-        source: ImageSource.camera,
-      );
-      picked_image = File(camera_img.path);
-      if (picked_image != null) {
-        Navigator.of(context).pushReplacementNamed(ScanResult.routeName);
-      }
-    }
-
-    void _showErrorDialog() {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          actions: [
-            Column(
-              children: [
-                TextButton(
-                  onPressed: openGallery,
-                  child: Container(
-                    width: double.infinity,
-                    child: Text(
-                      'Select Image From Gallery',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: openCamera,
-                  child: Container(
-                    width: double.infinity,
-                    child: Text(
-                      'Capture New Image',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Container(
-                    width: double.infinity,
-                    child: Text(
-                      'Cancel',
-                      textAlign: TextAlign.right,
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-      );
-    }
-
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
       child: GlowContainer(
@@ -167,7 +200,7 @@ class DemoVideo extends StatelessWidget {
                 'Assets/Images/ScanCamera.png',
               ),
               iconSize: 100.h,
-              onPressed: _showErrorDialog,
+              onPressed: showErrorDialog,
             ),
           ],
         ),
