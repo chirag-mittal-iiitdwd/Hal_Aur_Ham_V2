@@ -21,10 +21,17 @@ class ScanResult extends StatefulWidget {
 
 class _ScanResultState extends State<ScanResult> {
   var results;
-  loadModel() async {
+  AppleModel() async {
     await Tflite.loadModel(
-      model: 'Assets/models/Plant_Disease_Detection_Model.tflite',
-      labels: 'Assets/models/label.txt',
+      model: 'Assets/models/Apple.tflite',
+      labels: 'Assets/models/Apple_labels.txt',
+    );
+  }
+
+  MaizeModel() async {
+    await Tflite.loadModel(
+      model: 'Assets/models/Maize.tflite',
+      labels: 'Assets/models/Maize_labels.txt',
     );
   }
 
@@ -45,7 +52,9 @@ class _ScanResultState extends State<ScanResult> {
   @override
   void initState() {
     super.initState();
-    loadModel();
+    if (selected_crop == 'Apple')
+      AppleModel();
+    else if (selected_crop == 'Maize') MaizeModel();
     result(picked_image);
   }
 

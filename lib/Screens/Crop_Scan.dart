@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hal_aur_ham_v2/Components/App_Drawer.dart';
+import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
 import 'package:hal_aur_ham_v2/Screens/Drone_Status.dart';
 import 'package:hal_aur_ham_v2/Screens/Loading_Screen.dart';
 import 'package:hal_aur_ham_v2/Screens/Scan_Result.dart';
@@ -94,10 +95,17 @@ class _DemoVideoState extends State<DemoVideo> {
       isLoading = true;
       Navigator.of(context).pushNamed(LoadingScreen.routeName);
     });
+    var apiAddress;
+    if (selected_crop == 'Maize')
+      apiAddress = "https://maize-anomaly.herokuapp.com/predict/image";
+    else
+      apiAddress = "https://anomaly1291.herokuapp.com/predict/image";
+
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse("https://anomaly1291.herokuapp.com/predict/image"),
+      Uri.parse(apiAddress),
     );
+
     Map<String, String> headers = {"Content-type": "multipart/form-data"};
     request.files.add(
       http.MultipartFile(

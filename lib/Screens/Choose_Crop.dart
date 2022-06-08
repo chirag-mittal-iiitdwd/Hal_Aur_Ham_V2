@@ -5,6 +5,8 @@ import 'package:hal_aur_ham_v2/Screens/Crop_Scan.dart';
 
 import '../Components/App_Drawer.dart';
 
+var selected_crop;
+
 class chooseCrop extends StatelessWidget {
   static const routeName = '/chooseCrop';
 
@@ -86,6 +88,7 @@ class _CropCatalogState extends State<CropCatalog> {
                   children: [
                     FlatButton(
                         onPressed: () {
+                          selected_crop = 'Apple';
                           Navigator.of(context).pushNamed(CropScan.routeName);
                         },
                         child: Container(
@@ -103,6 +106,7 @@ class _CropCatalogState extends State<CropCatalog> {
                         )),
                     FlatButton(
                         onPressed: () {
+                          selected_crop = 'Maize';
                           Navigator.of(context).pushNamed(CropScan.routeName);
                         },
                         child: Container(
