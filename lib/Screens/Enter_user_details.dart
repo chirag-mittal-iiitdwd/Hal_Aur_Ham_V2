@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hal_aur_ham_v2/Components/user_image_picker.dart';
 import 'package:hal_aur_ham_v2/Screens/WelcomeScreen.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:location/location.dart';
 
 class RegiserationForm extends StatefulWidget {
   @override
@@ -13,48 +18,88 @@ class _RegiserationFormState extends State<RegiserationForm> {
   final _formKey = GlobalKey<FormState>();
   String name;
   String aadhar;
+  File _userImageFile;
+  double lat;
+  double lon;
 
-  void _trySubmit() async {
+  void _pickedImage(File image) {
+    _userImageFile = image;
+  }
+
+  // void _trySubmit1() {
+  //   // if (_userImageFile == null) {
+  //   //   Scaffold.of(context).showSnackBar(
+  //   //     SnackBar(
+  //   //       content: Text(
+  //   //         'Please Pick An Image',
+  //   //       ),
+  //   //       backgroundColor: Theme.of(context).errorColor,
+  //   //     ),
+  //   //   );
+  //   //   return;
+  //   // }
+  // }
+
+  // void dialog() async {
+  //   await showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: Text('Note'),
+  //       content: Text(
+  //           'Are you sure you want to submit these deatils ? You Wont be able to change these if you submit...'),
+  //       actions: [
+  //         FlatButton(
+  //           onPressed: () {
+  //             return;
+  //           },
+  //           child: Text('No'),
+  //         ),
+  //         FlatButton(
+  //           onPressed: () {
+  //             _trySubmit();
+  //             Navigator.of(context).pop();
+  //           },
+  //           child: Text("Yes"),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  void _trySubmit1() async {
     final curUser = FirebaseAuth.instance.currentUser;
     final isVaild = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
 
     if (isVaild) {
       _formKey.currentState.save();
-      await showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text('Note'),
-          content: Text(
-              'Are you sure you want to submit these deatils ? You Wont be able to change these if you submit...'),
-          actions: [
-            FlatButton(
-              onPressed: () {
-                return;
-              },
-              child: Text('No'),
-            ),
-            FlatButton(
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-              child: Text("Yes"),
-            ),
-          ],
-        ),
-      );
+      final locData = await Location().getLocation();
+      lat = locData.latitude;
+      lon = locData.longitude;
+
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('user_image')
+          .child(curUser.uid + '.jpg');
+
+      await ref.putFile(_userImageFile).whenComplete(() => null);
+
+      final url = await ref.getDownloadURL();
 
       await FirebaseFirestore.instance.collection('users').doc(curUser.uid).set(
         {
           'name': name,
           'phone': curUser.phoneNumber,
           'aadhar': aadhar,
+          'image_url': url,
+          'latitude':lat,
+          'longitude':lon,
         },
       );
 
       Navigator.popUntil(context, (route) => route.isFirst);
       Navigator.pushReplacement(
-        context, 
+        context,
         MaterialPageRoute(
           builder: (context) => WelcomeScreen(),
         ),
@@ -99,7 +144,11 @@ class _RegiserationFormState extends State<RegiserationForm> {
                           child: Column(
                             children: [
                               SizedBox(
-                                height: 30.h,
+                                height: 20.h,
+                              ),
+                              UserImagePicker(_pickedImage),
+                              SizedBox(
+                                height: 10.h,
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(
@@ -147,6 +196,9 @@ class _RegiserationFormState extends State<RegiserationForm> {
                                     ),
                                   ),
                                 ),
+                              ),
+                              SizedBox(
+                                height: 5.h,
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(
@@ -201,7 +253,7 @@ class _RegiserationFormState extends State<RegiserationForm> {
                                 style: ElevatedButton.styleFrom(
                                   primary: Color(0xff0876B5),
                                 ),
-                                onPressed: _trySubmit,
+                                onPressed: _trySubmit1,
                                 child: Text("Submit Details"),
                               ),
                             ],

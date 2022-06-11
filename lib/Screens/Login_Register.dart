@@ -34,12 +34,15 @@ class _LoginRegisterState extends State<LoginRegister> {
           ),
         );
       },
-      verificationCompleted: (credential) {},
+      verificationCompleted: (credential)async {
+        await print('verification completed');
+      },
       verificationFailed: (ex) {
         log(ex.code.toString());
       },
       codeAutoRetrievalTimeout: (verificationId) {},
       timeout: Duration(seconds: 120),
+
     );
   }
 

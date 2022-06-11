@@ -19,6 +19,7 @@ class _ProfileState extends State<Profile> {
   String userName = '';
   String aadhar = '';
   String phone = '';
+  String _image = '';
 
   void yourFunction(BuildContext context) async {
     setState(() {
@@ -30,6 +31,7 @@ class _ProfileState extends State<Profile> {
     userName = currentUserData['name'];
     aadhar = currentUserData['aadhar'];
     phone = currentUserData['phone'];
+    _image = currentUserData['image_url'];
     setState(() {
       _isLoading = false;
     });
@@ -112,7 +114,7 @@ class _ProfileState extends State<Profile> {
                                   CircleAvatar(
                                     radius: 110.r,
                                     backgroundImage: NetworkImage(
-                                      'https://images.nightcafe.studio//assets/profile.png?tr=w-1600,c-at_max',
+                                      _image,
                                     ),
                                     backgroundColor: Colors.transparent,
                                   ),
