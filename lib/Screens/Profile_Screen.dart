@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hal_aur_ham_v2/Screens/Login_Register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
 
 import '../Components/App_Drawer.dart';
 
@@ -20,6 +23,13 @@ class _ProfileState extends State<Profile> {
   String aadhar = '';
   String phone = '';
   String _image = '';
+  // File file;
+
+  // Future<File> urlToFile(String imageUrl) async {
+  //   final response = await http.get(Uri.parse(imageUrl));
+  //   await file.writeAsBytes(response.bodyBytes);
+  //   return file;
+  // }
 
   void yourFunction(BuildContext context) async {
     setState(() {
@@ -32,6 +42,7 @@ class _ProfileState extends State<Profile> {
     aadhar = currentUserData['aadhar'];
     phone = currentUserData['phone'];
     _image = currentUserData['image_url'];
+    // file = await urlToFile(_image);
     setState(() {
       _isLoading = false;
     });
@@ -113,9 +124,7 @@ class _ProfileState extends State<Profile> {
                                 children: [
                                   CircleAvatar(
                                     radius: 110.r,
-                                    backgroundImage: NetworkImage(
-                                      _image,
-                                    ),
+                                    backgroundImage: NetworkImage(_image),
                                     backgroundColor: Colors.transparent,
                                   ),
                                 ],
