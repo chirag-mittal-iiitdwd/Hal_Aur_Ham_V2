@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hal_aur_ham_v2/Components/user_image_picker.dart';
 import 'package:hal_aur_ham_v2/Screens/WelcomeScreen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:location/location.dart';
+import 'package:location/location.dart' as loc;
 
 class RegiserationForm extends StatefulWidget {
   @override
@@ -29,7 +29,7 @@ class _RegiserationFormState extends State<RegiserationForm> {
 
   void _submitToDB() async {
     final curUser = FirebaseAuth.instance.currentUser;
-    final locData = await Location().getLocation();
+    final locData = await loc.Location().getLocation();
     lat = locData.latitude;
     lon = locData.longitude;
 

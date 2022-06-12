@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hal_aur_ham_v2/Screens/WeatherDetail.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geocoding/geocoding.dart';
 
 import '../Components/extraWeather.dart';
 import '../Model/Weather_Model.dart';
@@ -12,9 +15,9 @@ Weather tomorrowTemp;
 
 List<Weather> todayWeather;
 List<Weather> sevenDay;
-String lat = '53.9006';
-String lon = '27.5590';
-String city = "Minisk";
+// String lat = '53.9006';
+// String lon = '27.5590';
+// String city = "Minisk";
 
 class WeatherScreen extends StatefulWidget {
   static const routeName = '/waether';
@@ -24,6 +27,10 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
+  String lat;
+  String lon;
+  String city;
+
   getData() async {
     try {
       fetchData(lat, lon, city).then((value) {
@@ -54,11 +61,27 @@ class _WeatherScreenState extends State<WeatherScreen> {
     }
   }
 
+  void yourFunction(BuildContext context) async {
+    final uid = FirebaseAuth.instance.currentUser.uid;
+    final currentUserData =
+        await FirebaseFirestore.instance.doc('users/' + uid).get();
+
+    lat = currentUserData['latitude'].toString();
+    lon = currentUserData['longitude'].toString();
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(double.parse(lat), double.parse(lon));
+    print(lat);
+    print(lon);
+    print(placemarks[0]);
+    city = placemarks[0].subLocality+", "+placemarks[0].locality;
+    setState(() {});
+    getData();
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getData();
+    WidgetsBinding.instance.addPostFrameCallback((_) => yourFunction(context));
   }
 
   @override
@@ -93,7 +116,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         : SingleChildScrollView(
                             child: Column(
                               children: [
-                                CurrentWeather(getData),
+                                CurrentWeather(getData, lat, lon, city),
                                 TodayWeather(),
                               ],
                             ),
@@ -228,7 +251,10 @@ class WeatherWidget extends StatelessWidget {
 
 class CurrentWeather extends StatefulWidget {
   final Function() updateData;
-  CurrentWeather(this.updateData);
+  String lat;
+  String lon;
+  String city;
+  CurrentWeather(this.updateData, this.lat, this.lon, this.city);
   @override
   State<CurrentWeather> createState() => _CurrentWeatherState();
 }
@@ -267,12 +293,13 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                       ? TextField(
                           focusNode: focusNode,
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.r),
-                              ),
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintText: "Enter a city Name"),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                            fillColor: Colors.white,
+                            filled: true,
+                            hintText: "Enter a city Name",
+                          ),
                           textInputAction: TextInputAction.search,
                           onSubmitted: (value) async {
                             CityModel temp = await (fetchCity(value));
@@ -297,9 +324,9 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                               searchBar = false;
                               return;
                             }
-                            city = temp.name;
-                            lat = temp.lat;
-                            lon = temp.lon;
+                            widget.city = temp.name;
+                            widget.lat = temp.lat;
+                            widget.lon = temp.lon;
                             updating = true;
                             setState(() {});
                             widget.updateData();
@@ -319,7 +346,7 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                                 focusNode.requestFocus();
                               },
                               child: Text(
-                                " " + city,
+                                " " + widget.city,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20.sp,
