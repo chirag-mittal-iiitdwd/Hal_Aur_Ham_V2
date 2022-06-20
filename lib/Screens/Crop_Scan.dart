@@ -97,9 +97,9 @@ class _DemoVideoState extends State<DemoVideo> {
     });
     var apiAddress;
     if (selected_crop == 'Maize')
-      apiAddress = "https://maize-anomaly.herokuapp.com/predict/image";
+      apiAddress = "https://maizeanomaly.herokuapp.com/predict/image";
     else
-      apiAddress = "https://anomaly1291.herokuapp.com/predict/image";
+      apiAddress = "https://appleanomaly.herokuapp.com/predict/image";
 
     var request = http.MultipartRequest(
       'POST',
