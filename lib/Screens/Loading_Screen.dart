@@ -42,9 +42,9 @@ class LoadingScreen extends StatelessWidget {
                           height: 20.h,
                         ),
                         Text(
-                          "Getting Results...",
+                          "Processing..",
                           style: TextStyle(
-                              fontSize: 18.sp,
+                              fontSize: 28.sp,
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
                         ),

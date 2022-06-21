@@ -7,11 +7,11 @@ import 'package:flutter_glow/flutter_glow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hal_aur_ham_v2/Components/App_Drawer.dart';
 import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
-import 'package:hal_aur_ham_v2/Screens/Drone_Status.dart';
 import 'package:hal_aur_ham_v2/Screens/Loading_Screen.dart';
 import 'package:hal_aur_ham_v2/Screens/Scan_Result.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_cropper/image_cropper.dart';
 
 ImagePicker picker = ImagePicker();
 var picked_image;
@@ -132,8 +132,20 @@ class _DemoVideoState extends State<DemoVideo> {
     final camera_img = await picker.pickImage(
       source: ImageSource.camera,
     );
-    picked_image = File(camera_img.path);
-    if (picked_image != null) {
+    if (camera_img != null) {
+      var cropped_image = await ImageCropper().cropImage(
+        sourcePath: camera_img.path,
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+        ],
+        uiSettings: [
+          AndroidUiSettings(
+            lockAspectRatio: false,
+            statusBarColor: Colors.black,
+          ),
+        ],
+      );
+      picked_image = File(cropped_image.path);
       onUploadImage();
     }
   }
@@ -142,8 +154,20 @@ class _DemoVideoState extends State<DemoVideo> {
     final gallery_img = await picker.pickImage(
       source: ImageSource.gallery,
     );
-    picked_image = File(gallery_img.path);
-    if (picked_image != null) {
+    if (gallery_img != null) {
+      var cropped_image = await ImageCropper().cropImage(
+        sourcePath: gallery_img.path,
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+        ],
+        uiSettings: [
+          AndroidUiSettings(
+            lockAspectRatio: false,
+            statusBarColor: Colors.black,
+          ),
+        ],
+      );
+      picked_image = File(cropped_image.path);
       onUploadImage();
     }
   }

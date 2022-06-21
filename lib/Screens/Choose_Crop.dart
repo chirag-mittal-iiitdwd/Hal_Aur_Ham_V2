@@ -86,42 +86,111 @@ class _CropCatalogState extends State<CropCatalog> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    FlatButton(
-                        onPressed: () {
-                          selected_crop = 'Apple';
-                          Navigator.of(context).pushNamed(CropScan.routeName);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black26),
-                              borderRadius: BorderRadius.circular(20.r)),
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20.r),
-                              child: Image.asset(
-                                'Assets/Images/Apple.jpeg',
-                                height: 105.h,
-                                width: 105.h,
-                                fit: BoxFit.fill,
-                              )),
-                        )),
-                    FlatButton(
-                        onPressed: () {
-                          selected_crop = 'Maize';
-                          Navigator.of(context).pushNamed(CropScan.routeName);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black26),
-                              borderRadius: BorderRadius.circular(20.r)),
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20.r),
-                              child: Image.asset(
-                                'Assets/Images/Maize.jpeg',
-                                height: 105.h,
-                                width: 105.h,
-                                fit: BoxFit.fill,
-                              )),
-                        )),
+                    Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20.r),
+                          child: FlatButton(
+                            onPressed: () {
+                              selected_crop = 'Apple';
+                              Navigator.of(context)
+                                  .pushNamed(CropScan.routeName);
+                            },
+                            child: Container(
+                              width: 100.h,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black26),
+                                  borderRadius: BorderRadius.circular(20.r)),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20.r),
+                                child: Image.asset(
+                                  'Assets/Images/Apple.jpeg',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Text("Apple")
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        FlatButton(
+                            onPressed: () {
+                              selected_crop = 'Maize';
+                              Navigator.of(context)
+                                  .pushNamed(CropScan.routeName);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black26),
+                                  borderRadius: BorderRadius.circular(20.r)),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  child: Image.asset(
+                                    'Assets/Images/Maize.jpeg',
+                                    height: 100.h,
+                                    width: 100.h,
+                                    fit: BoxFit.fill,
+                                  )),
+                            )),
+                        Text("Maize")
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        FlatButton(
+                            onPressed: () {
+                              selected_crop = 'Tomato';
+                              //Navigator.of(context).pushNamed(CropScan.routeName);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black26),
+                                  borderRadius: BorderRadius.circular(20.r)),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  child: Image.asset(
+                                    'Assets/Images/Tomato.jpeg',
+                                    height: 100.h,
+                                    width: 100.h,
+                                    fit: BoxFit.fill,
+                                  )),
+                            )),
+                        Text("Tomato")
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        FlatButton(
+                            onPressed: () {
+                              selected_crop = 'Potato';
+                              //Navigator.of(context).pushNamed(CropScan.routeName);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black26),
+                                  borderRadius: BorderRadius.circular(20.r)),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  child: Image.asset(
+                                    'Assets/Images/Potato.jpeg',
+                                    height: 100.h,
+                                    width: 100.h,
+                                    fit: BoxFit.fill,
+                                  )),
+                            )),
+                        Text("Potato")
+                      ],
+                    ),
                   ],
                 )
               ],

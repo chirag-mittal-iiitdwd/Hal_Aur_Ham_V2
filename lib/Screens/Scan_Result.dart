@@ -89,7 +89,7 @@ class _ScanResultState extends State<ScanResult> {
                           padding: EdgeInsets.symmetric(
                               horizontal: 20.w, vertical: 20.h),
                           child: GlowContainer(
-                              height: 420.h,
+                              height: 355.h,
                               margin: EdgeInsets.symmetric(
                                 vertical: 2.h,
                                 horizontal: 2.w,
@@ -100,8 +100,8 @@ class _ScanResultState extends State<ScanResult> {
                               color: Color(0xB0FFDFB0),
                               child: Column(children: [
                                 Container(
-                                  height: 350.h,
-                                  width: double.infinity,
+                                  height: 283.h,
+                                  width: 283.h,
                                   child: Image.file(
                                     picked_image,
                                     fit: BoxFit.fill,
@@ -113,7 +113,7 @@ class _ScanResultState extends State<ScanResult> {
                           padding: EdgeInsets.only(left: 20.w, right: 20.w),
                           child: GlowContainer(
                             margin: EdgeInsets.symmetric(
-                              vertical: 2.h,
+                              vertical: 40.h,
                               horizontal: 2.w,
                             ),
                             borderRadius: BorderRadius.circular(30.r),
@@ -243,12 +243,5 @@ class _ScanResultState extends State<ScanResult> {
         ),
       ),
     );
-  }
-}
-
-class Loading extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
