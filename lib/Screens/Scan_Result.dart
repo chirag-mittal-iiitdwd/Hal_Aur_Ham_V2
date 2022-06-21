@@ -118,7 +118,7 @@ class _ScanResultState extends State<ScanResult> {
                             ),
                             borderRadius: BorderRadius.circular(30.r),
                             color: Color.fromRGBO(0, 0, 0, 0.6),
-                            child: isAnomaly == 'Anomaly'
+                            child: isAnomaly["result"] == 'Anomaly'
                                 ? Column(
                                     children: [
                                       SizedBox(
@@ -129,6 +129,13 @@ class _ScanResultState extends State<ScanResult> {
                                         isAnomaly != null
                                             ? "This isn't a leaf, is this?"
                                             : "Loading...",
+                                        style: TextStyle(
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                      Text(
+                                        isAnomaly["error"].toString(),
                                         style: TextStyle(
                                             fontSize: 18.sp,
                                             fontWeight: FontWeight.bold,
@@ -173,6 +180,13 @@ class _ScanResultState extends State<ScanResult> {
                                             : "Loading...",
                                         style: TextStyle(
                                             fontSize: 14.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                      Text(
+                                        isAnomaly["error"].toString(),
+                                        style: TextStyle(
+                                            fontSize: 18.sp,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white),
                                       ),
