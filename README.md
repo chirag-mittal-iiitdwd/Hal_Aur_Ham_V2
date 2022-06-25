@@ -1,16 +1,9 @@
 # hal_aur_ham_v2
 
-A new Flutter project.
+An all in one solution for the farmers.
 
-## Getting Started
+In order to acces this repo
+1. First clone the repo
+2. Run ```flutter pub get``` to get all the necessary packages and you will be able to build this app
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Note : The OTP feature will only work if Chirag Mittal build the app on his device as there certain keys which are device specific and have to be given to firebase
