@@ -51,49 +51,58 @@ class CropVizScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              30.r,
+                        Expanded(
+                          child: Container(
+                            child: Center(
+                              child: Text(
+                                'Currently this feature is under construction',
+                              ),
                             ),
-                            color: Color(0xa8FFDFB0),
-                          ),
-                          margin: EdgeInsets.symmetric(horizontal: 28.w),
-                          padding: EdgeInsets.symmetric(
-                            vertical: 15.h,
-                            horizontal: 15.w,
-                          ),
-                          height: 630.h,
-                          child: Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                    30.r,
-                                  ),
-                                  color: Color(0x871A6114),
-                                ),
-                                height: 250.h,
-                                width: 300.w,
-                                child: Text("Viz 1"),
-                              ),
-                              SizedBox(
-                                height: 20.h,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                    30.r,
-                                  ),
-                                  color: Color(0x871A6114),
-                                ),
-                                height: 250.h,
-                                width: 300.w,
-                                child: Text("Viz 2"),
-                              )
-                            ],
                           ),
                         ),
+                        // Container(
+                        //   decoration: BoxDecoration(
+                        //     borderRadius: BorderRadius.circular(
+                        //       30.r,
+                        //     ),
+                        //     color: Color(0xa8FFDFB0),
+                        //   ),
+                        //   margin: EdgeInsets.symmetric(horizontal: 28.w),
+                        //   padding: EdgeInsets.symmetric(
+                        //     vertical: 15.h,
+                        //     horizontal: 15.w,
+                        //   ),
+                        //   height: 630.h,
+                        //   child: Column(
+                        //     children: [
+                        //       Container(
+                        //         decoration: BoxDecoration(
+                        //           borderRadius: BorderRadius.circular(
+                        //             30.r,
+                        //           ),
+                        //           color: Color(0x871A6114),
+                        //         ),
+                        //         height: 250.h,
+                        //         width: 300.w,
+                        //         child: Text("Viz 1"),
+                        //       ),
+                        //       SizedBox(
+                        //         height: 20.h,
+                        //       ),
+                        //       Container(
+                        //         decoration: BoxDecoration(
+                        //           borderRadius: BorderRadius.circular(
+                        //             30.r,
+                        //           ),
+                        //           color: Color(0x871A6114),
+                        //         ),
+                        //         height: 250.h,
+                        //         width: 300.w,
+                        //         child: Text("Viz 2"),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

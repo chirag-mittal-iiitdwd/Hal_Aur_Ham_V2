@@ -15,7 +15,7 @@ import './Screens/Drone_Status.dart';
 import './Screens/Scan_Result.dart';
 import './Screens/Profile_Screen.dart';
 import '../Model/Weather_Model.dart';
-import '../Screens/Weather.dart';
+import '../Screens/Weather/Weather.dart';
 import '../Screens/Login_Register.dart';
 import './Screens/Login_Register.dart';
 import './Model/NewsItems.dart';

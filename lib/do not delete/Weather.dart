@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hal_aur_ham_v2/Screens/WeatherDetail.dart';
+import 'package:hal_aur_ham_v2/Screens/Weather/widgets/WeatherDetail.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geocoding/geocoding.dart';
@@ -73,7 +73,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     print(lat);
     print(lon);
     print(placemarks[0]);
-    city = placemarks[0].subLocality+", "+placemarks[0].locality;
+    city = placemarks[0].subLocality + ", " + placemarks[0].locality;
     setState(() {});
     getData();
   }
@@ -116,7 +116,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         : SingleChildScrollView(
                             child: Column(
                               children: [
-                                CurrentWeather(getData, lat, lon, city),
+                                CurrentWeather(lat, lon, city),
                                 TodayWeather(),
                               ],
                             ),
@@ -250,11 +250,11 @@ class WeatherWidget extends StatelessWidget {
 }
 
 class CurrentWeather extends StatefulWidget {
-  final Function() updateData;
+  // final Function() updateData;
   String lat;
   String lon;
   String city;
-  CurrentWeather(this.updateData, this.lat, this.lon, this.city);
+  CurrentWeather(this.lat, this.lon, this.city);
   @override
   State<CurrentWeather> createState() => _CurrentWeatherState();
 }
@@ -301,39 +301,39 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                             hintText: "Enter a city Name",
                           ),
                           textInputAction: TextInputAction.search,
-                          onSubmitted: (value) async {
-                            CityModel temp = await (fetchCity(value));
-                            if (temp == null) {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    backgroundColor: Color(0xff030317),
-                                    title: Text('City not found'),
-                                    content: Text("Please check the city name"),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text("Ok"))
-                                    ],
-                                  );
-                                },
-                              );
-                              searchBar = false;
-                              return;
-                            }
-                            widget.city = temp.name;
-                            widget.lat = temp.lat;
-                            widget.lon = temp.lon;
-                            updating = true;
-                            setState(() {});
-                            widget.updateData();
-                            searchBar = false;
-                            updating = false;
-                            setState(() {});
-                          },
+                          // onSubmitted: (value) async {
+                          //   CityModel temp = await (fetchCity(value));
+                          //   if (temp == null) {
+                          //     showDialog(
+                          //       context: context,
+                          //       builder: (BuildContext context) {
+                          //         return AlertDialog(
+                          //           backgroundColor: Color(0xff030317),
+                          //           title: Text('City not found'),
+                          //           content: Text("Please check the city name"),
+                          //           actions: [
+                          //             TextButton(
+                          //                 onPressed: () {
+                          //                   Navigator.of(context).pop();
+                          //                 },
+                          //                 child: Text("Ok"))
+                          //           ],
+                          //         );
+                          //       },
+                          //     );
+                          //     searchBar = false;
+                          //     return;
+                          //   }
+                          //   widget.city = temp.name;
+                          //   widget.lat = temp.lat;
+                          //   widget.lon = temp.lon;
+                          //   updating = true;
+                          //   setState(() {});
+                          //   widget.updateData();
+                          //   searchBar = false;
+                          //   updating = false;
+                          //   setState(() {});
+                          // },
                         )
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.center,
