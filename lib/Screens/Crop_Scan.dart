@@ -1,17 +1,15 @@
 // ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, non_constant_identifier_names, use_key_in_widget_constructors, unnecessary_new
 
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hal_aur_ham_v2/Components/App_Drawer.dart';
-import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
-import 'package:hal_aur_ham_v2/Screens/Loading_Screen.dart';
 import 'package:hal_aur_ham_v2/Screens/Scan_Result.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_cropper/image_cropper.dart';
+
+import 'Loading_Screen.dart';
 
 ImagePicker picker = ImagePicker();
 var picked_image;
@@ -90,45 +88,11 @@ class DemoVideo extends StatefulWidget {
 }
 
 class _DemoVideoState extends State<DemoVideo> {
-  onUploadImage() async {
+  Future openCamera() async {
     setState(() {
-      isLoading = true;
+      var isLoading = true;
       Navigator.of(context).pushNamed(LoadingScreen.routeName);
     });
-    var apiAddress;
-    if (selected_crop == 'Maize')
-      apiAddress = "https://maizeanomaly.herokuapp.com/predict/image";
-    else
-      apiAddress = "https://appleanomaly.herokuapp.com/predict/image";
-
-    var request = http.MultipartRequest(
-      'POST',
-      Uri.parse(apiAddress),
-    );
-
-    Map<String, String> headers = {"Content-type": "multipart/form-data"};
-    request.files.add(
-      http.MultipartFile(
-        'file',
-        picked_image.readAsBytes().asStream(),
-        picked_image.lengthSync(),
-        filename: picked_image.path.split('/').last,
-      ),
-    );
-    request.headers.addAll(headers);
-    print("request: " + request.toString());
-    var res = await request.send();
-    http.Response response = await http.Response.fromStream(res);
-    setState(
-      () {
-        isLoading = false;
-        isAnomaly = jsonDecode(response.body);
-        Navigator.of(context).pushReplacementNamed(ScanResult.routeName);
-      },
-    );
-  }
-
-  Future openCamera() async {
     final camera_img = await picker.pickImage(
       source: ImageSource.camera,
     );
@@ -146,7 +110,9 @@ class _DemoVideoState extends State<DemoVideo> {
         ],
       );
       picked_image = File(cropped_image.path);
-      onUploadImage();
+      setState(() {
+        Navigator.of(context).pushReplacementNamed(ScanResult.routeName);
+      });
     }
   }
 
@@ -168,7 +134,9 @@ class _DemoVideoState extends State<DemoVideo> {
         ],
       );
       picked_image = File(cropped_image.path);
-      onUploadImage();
+      setState(() {
+        Navigator.of(context).pushReplacementNamed(ScanResult.routeName);
+      });
     }
   }
 

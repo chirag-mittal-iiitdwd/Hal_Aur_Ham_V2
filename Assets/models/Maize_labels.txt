@@ -1,4 +1,5 @@
-0 Cercospora_leaf_spot Gray_leaf_spot
-1 Common_rust
-2 Healthy
-3 Northern_Leaf_Blight
+Other
+Northern Leaf Blight
+Healthy
+Common Rust
+Cercospora Leaf Spot

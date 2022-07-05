@@ -1,4 +1,5 @@
-0 Apple_scab
-1 Black_rot
-2 Cedar_apple_rust
-3 Healthy
+Apple Scab
+Black Rot
+Cedar Apple Rust
+Healthy
+Other
