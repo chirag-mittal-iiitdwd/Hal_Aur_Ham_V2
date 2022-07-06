@@ -1,5 +1,6 @@
-Other
+Cercospora Leaf Spot
+Common Rust
 Northern Leaf Blight
 Healthy
-Common Rust
-Cercospora Leaf Spot
+Other
+
