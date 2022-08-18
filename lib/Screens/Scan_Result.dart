@@ -14,6 +14,8 @@ import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
 
 import 'Loading_Screen.dart';
 
+var x = 'Assets/Images/farm_back.jpg';
+
 class ScanResult extends StatefulWidget {
   static const routeName = '/scanResult';
 

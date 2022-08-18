@@ -91,7 +91,6 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                               labelText: "6-Digit OTP",
                               counterText: "",
                             ),
-                            
                           ),
                           SizedBox(
                             height: 20.h,
@@ -102,6 +101,9 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                             },
                             color: Colors.blue,
                             child: Text("Verify"),
+                          ),
+                          SizedBox(
+                            height: 20.h,
                           ),
                         ],
                       ),

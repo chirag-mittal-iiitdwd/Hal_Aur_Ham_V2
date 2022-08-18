@@ -34,7 +34,7 @@ class _LoginRegisterState extends State<LoginRegister> {
           ),
         );
       },
-      verificationCompleted: (credential)async {
+      verificationCompleted: (credential) async {
         await print('verification completed');
       },
       verificationFailed: (ex) {
@@ -42,7 +42,6 @@ class _LoginRegisterState extends State<LoginRegister> {
       },
       codeAutoRetrievalTimeout: (verificationId) {},
       timeout: Duration(seconds: 120),
-
     );
   }
 
@@ -260,7 +259,10 @@ class _LoginRegisterState extends State<LoginRegister> {
                                 ),
                               ),
                             ],
-                          )
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
                         ],
                       ),
                     ),

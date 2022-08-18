@@ -188,6 +188,24 @@ class AppDrawer extends StatelessWidget {
                     );
                   },
                 ),
+                ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 30.w),
+                  title: Text(
+                    'Settings',
+                    style: TextStyle(
+                      fontSize: 22.sp,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  trailing: Icon(
+                    Icons.settings,
+                    color: Colors.black,
+                  ),
+                  onTap: () {
+                    // Navigator.of(context).pushNamed(WeatherScreen.routeName);
+                  },
+                ),
+                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
