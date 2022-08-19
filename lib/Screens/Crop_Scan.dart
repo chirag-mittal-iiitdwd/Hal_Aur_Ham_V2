@@ -1,20 +1,22 @@
-// ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, non_constant_identifier_names, use_key_in_widget_constructors, unnecessary_new
-
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hal_aur_ham_v2/Components/App_Drawer.dart';
+import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
 import 'package:hal_aur_ham_v2/Screens/Scan_Result.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
-
+import 'package:http/http.dart' as http;
 import 'Loading_Screen.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
 
 ImagePicker picker = ImagePicker();
 var picked_image;
-var isAnomaly;
 var isLoading = false;
+var isLeaf = false;
 
 class CropScan extends StatefulWidget {
   static const routeName = '/cropScan';
@@ -88,6 +90,63 @@ class DemoVideo extends StatefulWidget {
 }
 
 class _DemoVideoState extends State<DemoVideo> {
+  /// Returns a cropped copy of [src].
+
+  onUploadImage() async {
+    setState(() {
+      var isLoading = true;
+      Navigator.of(context).pushNamed(LoadingScreen.routeName);
+    });
+    var apiAddress =
+        "https://detect.roboflow.com/ok-nnzum/1?api_key=vgKoqrorYQwrygJjjad2";
+
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse(apiAddress),
+    );
+
+    Map<String, String> headers = {"Content-type": "multipart/form-data"};
+    request.files.add(
+      http.MultipartFile(
+        'file',
+        picked_image.readAsBytes().asStream(),
+        picked_image.lengthSync(),
+        filename: picked_image.path.split('/').last,
+      ),
+    );
+    request.headers.addAll(headers);
+
+    print("request: " + request.toString());
+
+    var res = await request.send();
+    http.Response response = await http.Response.fromStream(res);
+    var decodedResults = jsonDecode(response.body);
+    print(decodedResults);
+
+    if (decodedResults['predictions'].length != 0) {
+      var decoded1 = decodedResults['predictions'][0];
+
+      File cropped_leaf = await FlutterNativeImage.cropImage(
+          picked_image.path,
+          (decoded1['x'] - decoded1['width'] / 2).round(),
+          (decoded1['y'] - decoded1['height'] / 2).round(),
+          (decoded1['width']).round(),
+          (decoded1['height']).round());
+
+      picked_image = cropped_leaf;
+      isLeaf = true;
+    } else {
+      isLeaf = false;
+    }
+
+    setState(
+      () {
+        isLoading = false;
+        Navigator.of(context).pushReplacementNamed(ScanResult.routeName);
+      },
+    );
+  }
+
   Future openCamera() async {
     setState(() {
       var isLoading = true;
@@ -110,8 +169,9 @@ class _DemoVideoState extends State<DemoVideo> {
         ],
       );
       picked_image = File(cropped_image.path);
+
       setState(() {
-        Navigator.of(context).pushReplacementNamed(ScanResult.routeName);
+        onUploadImage();
       });
     }
   }
@@ -135,7 +195,7 @@ class _DemoVideoState extends State<DemoVideo> {
       );
       picked_image = File(cropped_image.path);
       setState(() {
-        Navigator.of(context).pushReplacementNamed(ScanResult.routeName);
+        onUploadImage();
       });
     }
   }

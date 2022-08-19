@@ -3,19 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
 import 'package:http/http.dart' as http;
 
-
 import '../Screens/Crop_Scan.dart';
 import '../Screens/Loading_Screen.dart';
 import '../Screens/Scan_Result.dart';
 
-class API extends StatefulWidget {
+var isAnomaly;
 
+class API extends StatefulWidget {
   @override
   State<API> createState() => _APIState();
 }
 
 class _APIState extends State<API> {
-
   @override
   Widget build(BuildContext context) {
     onUploadImage() async {
@@ -55,6 +54,5 @@ class _APIState extends State<API> {
         },
       );
     }
-    
   }
 }

@@ -11,10 +11,7 @@ import 'package:http/http.dart' as http;
 import 'Crop_Scan.dart';
 import 'package:tflite/tflite.dart';
 import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
-
 import 'Loading_Screen.dart';
-
-var x = 'Assets/Images/farm_back.jpg';
 
 class ScanResult extends StatefulWidget {
   static const routeName = '/scanResult';
@@ -56,10 +53,12 @@ class _ScanResultState extends State<ScanResult> {
   @override
   void initState() {
     super.initState();
-    if (selected_crop == 'Apple')
-      AppleModel();
-    else if (selected_crop == 'Maize') MaizeModel();
-    result(picked_image);
+    if (isLeaf) {
+      if (selected_crop == 'Apple')
+        AppleModel();
+      else if (selected_crop == 'Maize') MaizeModel();
+      result(picked_image);
+    }
   }
 
   @override
@@ -106,10 +105,15 @@ class _ScanResultState extends State<ScanResult> {
                                 Container(
                                   height: 283.h,
                                   width: 283.h,
-                                  child: Image.file(
-                                    picked_image,
-                                    fit: BoxFit.fill,
-                                  ),
+                                  child: isLeaf == true
+                                      ? Image.file(
+                                          picked_image,
+                                          fit: BoxFit.fill,
+                                        )
+                                      : Image.asset(
+                                          'Assets/Images/OK.jpeg',
+                                          fit: BoxFit.fill,
+                                        ),
                                 ),
                               ])),
                         ),
@@ -122,121 +126,179 @@ class _ScanResultState extends State<ScanResult> {
                             ),
                             borderRadius: BorderRadius.circular(30.r),
                             color: Color.fromRGBO(0, 0, 0, 0.6),
-                            child: results == null
-                                ? Text("Loading")
-                                : results[0]["label"] == 'Other'
-                                    ? Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 20.h,
-                                            width: double.infinity,
-                                          ),
-                                          Text(
-                                            results != null
-                                                ? "This isn't a leaf, is this?"
-                                                : "Loading...",
-                                            style: TextStyle(
-                                                fontSize: 18.sp,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white),
-                                          ),
-                                          SizedBox(
-                                            height: 20.h,
-                                          ),
-                                          FlatButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pushNamed(
-                                                  chooseCrop.routeName);
-                                            },
-                                            child: Image.asset(
-                                              'Assets/Images/camera.png',
-                                              height: 60.h,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 20.h,
-                                          ),
-                                          Text(
-                                            "Scan Again",
-                                            style: TextStyle(
-                                                fontSize: 18.sp,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white),
-                                          ),
-                                          SizedBox(
-                                            height: 20.h,
-                                          ),
-                                        ],
-                                      )
-                                    : Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 20.h,
-                                          ),
-                                          Text(
-                                            results != null
-                                                ? "Disease: ${results[0]["label"]}"
-                                                : "Loading...",
-                                            style: TextStyle(
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white),
-                                          ),
-                                          SizedBox(
-                                            height: 20.h,
-                                          ),
-                                          Text(
-                                            results != null
-                                                ? "Confidence:  ${(results[0]["confidence"] * 100).toStringAsFixed(2)}%"
-                                                : "Loading...",
-                                            style: TextStyle(
-                                                fontSize: 18.sp,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white),
-                                          ),
-                                          SizedBox(
-                                            height: 20.h,
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                              left: 70.w,
-                                              right: 70.w,
-                                            ),
-                                            child: ListTile(
-                                              title: Text(
-                                                "Video Link",
-                                                style: TextStyle(
-                                                    fontSize: 20.sp,
-                                                    color: Colors.white),
-                                              ),
-                                              trailing: Icon(
-                                                CupertinoIcons
-                                                    .arrowtriangle_right_square,
-                                                size: 40.sp,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 70.w, right: 70.w),
-                                            child: ListTile(
-                                              title: Text(
-                                                "Blog Link",
-                                                style: TextStyle(
-                                                  fontSize: 20.sp,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              trailing: Icon(
-                                                Icons.chrome_reader_mode_sharp,
-                                                size: 40.sp,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          )
-                                        ],
+                            child: isLeaf == false
+                                ? Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 20.h,
+                                        width: double.infinity,
                                       ),
+                                      Text(
+                                        "No Leaf Detected",
+                                        style: TextStyle(
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      FlatButton(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pushNamed(chooseCrop.routeName);
+                                        },
+                                        child: Image.asset(
+                                          'Assets/Images/camera.png',
+                                          height: 60.h,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Text(
+                                        "Scan Again",
+                                        style: TextStyle(
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                    ],
+                                  )
+                                : Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      results == null
+                                          ? Text(
+                                              "Loading...",
+                                              style: TextStyle(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white),
+                                            )
+                                          : results[0]["label"] != 'Other'
+                                              ? Column(
+                                                  children: [
+                                                    Text(
+                                                      "Disease: ${results[0]["label"]}",
+                                                      style: TextStyle(
+                                                          fontSize: 14.sp,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 20.h,
+                                                    ),
+                                                    Text(
+                                                      results != null
+                                                          ? "Confidence:  ${(results[0]["confidence"] * 100).toStringAsFixed(2)}%"
+                                                          : "Loading...",
+                                                      style: TextStyle(
+                                                          fontSize: 18.sp,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 20.h,
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                        left: 70.w,
+                                                        right: 70.w,
+                                                      ),
+                                                      child: ListTile(
+                                                        title: Text(
+                                                          "Video Link",
+                                                          style: TextStyle(
+                                                              fontSize: 20.sp,
+                                                              color:
+                                                                  Colors.white),
+                                                        ),
+                                                        trailing: Icon(
+                                                          CupertinoIcons
+                                                              .arrowtriangle_right_square,
+                                                          size: 40.sp,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 70.w,
+                                                          right: 70.w),
+                                                      child: ListTile(
+                                                        title: Text(
+                                                          "Blog Link",
+                                                          style: TextStyle(
+                                                            fontSize: 20.sp,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                        trailing: Icon(
+                                                          Icons
+                                                              .chrome_reader_mode_sharp,
+                                                          size: 40.sp,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                )
+                                              : Column(
+                                                  children: [
+                                                    SizedBox(
+                                                      height: 20.h,
+                                                      width: double.infinity,
+                                                    ),
+                                                    Text(
+                                                      "Leaf Detected",
+                                                      style: TextStyle(
+                                                          fontSize: 18.sp,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 20.h,
+                                                    ),
+                                                    FlatButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pushNamed(
+                                                                chooseCrop
+                                                                    .routeName);
+                                                      },
+                                                      child: Image.asset(
+                                                        'Assets/Images/camera.png',
+                                                        height: 60.h,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 20.h,
+                                                    ),
+                                                    Text(
+                                                      "Scan Again",
+                                                      style: TextStyle(
+                                                        fontSize: 18.sp,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 20.h,
+                                                    ),
+                                                  ],
+                                                )
+                                    ],
+                                  ),
                           ),
                         )
                       ],
