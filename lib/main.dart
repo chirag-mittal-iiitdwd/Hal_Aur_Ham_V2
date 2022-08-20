@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
 import 'package:hal_aur_ham_v2/Screens/News_Detail_Screen.dart';
+import 'package:hal_aur_ham_v2/Screens/Scan_Result_Copy.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
             CropVizScreen.routeName: (ctx) => CropVizScreen(),
             CropScan.routeName: (ctx) => CropScan(),
             ScanResult.routeName: (ctx) => ScanResult(),
+            scanResultCopy.routeName: (ctx) => scanResultCopy(),
             NewsDetail.routeName: (ctx) => NewsDetail(),
             chooseCrop.routeName: (ctx) => chooseCrop(),
             LoadingScreen.routeName: (ctx) => LoadingScreen(),

@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hal_aur_ham_v2/Components/App_Drawer.dart';
 import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
 import 'package:hal_aur_ham_v2/Screens/Scan_Result.dart';
+import 'package:hal_aur_ham_v2/Screens/Scan_Result_Copy.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:http/http.dart' as http;
@@ -142,7 +143,7 @@ class _DemoVideoState extends State<DemoVideo> {
     setState(
       () {
         isLoading = false;
-        Navigator.of(context).pushReplacementNamed(ScanResult.routeName);
+        Navigator.of(context).pushReplacementNamed(scanResultCopy.routeName);
       },
     );
   }

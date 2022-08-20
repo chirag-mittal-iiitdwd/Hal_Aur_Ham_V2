@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, unused_import
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -13,14 +14,14 @@ import 'package:tflite/tflite.dart';
 import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
 import 'Loading_Screen.dart';
 
-class ScanResult extends StatefulWidget {
-  static const routeName = '/scanResult';
+class scanResultCopy extends StatefulWidget {
+  static const routeName = '/scanResultCopy';
 
   @override
-  State<ScanResult> createState() => _ScanResultState();
+  State<scanResultCopy> createState() => _ScanResultCopyState();
 }
 
-class _ScanResultState extends State<ScanResult> {
+class _ScanResultCopyState extends State<scanResultCopy> {
   var results;
   AppleModel() async {
     await Tflite.loadModel(
@@ -37,16 +38,34 @@ class _ScanResultState extends State<ScanResult> {
   }
 
   result(File image) async {
-    var recognitions = await Tflite.runModelOnImage(
-        path: image.path, // required
-        imageMean: 0.0, // defaults to 117.0
-        imageStd: 255.0, // defaults to 1.0
-        numResults: 5, // defaults to 5
-        threshold: 0.2, // defaults to 0.1
-        asynch: true // defaults to true
-        );
+    var apiAddress =
+        "https://classify.roboflow.com/do5/2?api_key=uq07sZYqektMXKoUld8Z";
+
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse(apiAddress),
+    );
+
+    Map<String, String> headers = {"Content-type": "multipart/form-data"};
+    request.files.add(
+      http.MultipartFile(
+        'file',
+        picked_image.readAsBytes().asStream(),
+        picked_image.lengthSync(),
+        filename: picked_image.path.split('/').last,
+      ),
+    );
+    request.headers.addAll(headers);
+
+    print("request: " + request.toString());
+
+    var res = await request.send();
+    http.Response response = await http.Response.fromStream(res);
+    var decodedResults = jsonDecode(response.body);
+    print(decodedResults);
+
     setState(() {
-      results = recognitions;
+      results = decodedResults;
     });
   }
 
@@ -189,122 +208,71 @@ class _ScanResultState extends State<ScanResult> {
                                                 ),
                                               ),
                                             )
-                                          : results[0]["label"] != 'Other'
-                                              ? Column(
-                                                  children: [
-                                                    Text(
-                                                      "Disease: ${results[0]["label"]}",
+                                          : Column(
+                                              children: [
+                                                Text(
+                                                  "Disease: ${results['top']}",
+                                                  style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white),
+                                                ),
+                                                SizedBox(
+                                                  height: 20.h,
+                                                ),
+                                                Text(
+                                                  "Confidence:  ${(results['confidence'] * 100).toStringAsFixed(2)}%",
+                                                  style: TextStyle(
+                                                      fontSize: 18.sp,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white),
+                                                ),
+                                                SizedBox(
+                                                  height: 20.h,
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                    left: 70.w,
+                                                    right: 70.w,
+                                                  ),
+                                                  child: ListTile(
+                                                    title: Text(
+                                                      "Video Link",
                                                       style: TextStyle(
-                                                          fontSize: 14.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold,
+                                                          fontSize: 20.sp,
                                                           color: Colors.white),
                                                     ),
-                                                    SizedBox(
-                                                      height: 20.h,
+                                                    trailing: Icon(
+                                                      CupertinoIcons
+                                                          .arrowtriangle_right_square,
+                                                      size: 40.sp,
+                                                      color: Colors.white,
                                                     ),
-                                                    Text(
-                                                      results != null
-                                                          ? "Confidence:  ${(results[0]["confidence"] * 100).toStringAsFixed(2)}%"
-                                                          : "Loading...",
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 70.w, right: 70.w),
+                                                  child: ListTile(
+                                                    title: Text(
+                                                      "Blog Link",
                                                       style: TextStyle(
-                                                          fontSize: 18.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.white),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 20.h,
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                        left: 70.w,
-                                                        right: 70.w,
-                                                      ),
-                                                      child: ListTile(
-                                                        title: Text(
-                                                          "Video Link",
-                                                          style: TextStyle(
-                                                              fontSize: 20.sp,
-                                                              color:
-                                                                  Colors.white),
-                                                        ),
-                                                        trailing: Icon(
-                                                          CupertinoIcons
-                                                              .arrowtriangle_right_square,
-                                                          size: 40.sp,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 70.w,
-                                                          right: 70.w),
-                                                      child: ListTile(
-                                                        title: Text(
-                                                          "Blog Link",
-                                                          style: TextStyle(
-                                                            fontSize: 20.sp,
-                                                            color: Colors.white,
-                                                          ),
-                                                        ),
-                                                        trailing: Icon(
-                                                          Icons
-                                                              .chrome_reader_mode_sharp,
-                                                          size: 40.sp,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    )
-                                                  ],
-                                                )
-                                              : Column(
-                                                  children: [
-                                                    SizedBox(
-                                                      height: 20.h,
-                                                      width: double.infinity,
-                                                    ),
-                                                    Text(
-                                                      "Leaf Detected",
-                                                      style: TextStyle(
-                                                          fontSize: 18.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.white),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 20.h,
-                                                    ),
-                                                    FlatButton(
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pushNamed(
-                                                                chooseCrop
-                                                                    .routeName);
-                                                      },
-                                                      child: Image.asset(
-                                                        'Assets/Images/camera.png',
-                                                        height: 60.h,
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 20.h,
-                                                    ),
-                                                    Text(
-                                                      "Scan Again",
-                                                      style: TextStyle(
-                                                        fontSize: 18.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                        fontSize: 20.sp,
                                                         color: Colors.white,
                                                       ),
                                                     ),
-                                                    SizedBox(
-                                                      height: 20.h,
+                                                    trailing: Icon(
+                                                      Icons
+                                                          .chrome_reader_mode_sharp,
+                                                      size: 40.sp,
+                                                      color: Colors.white,
                                                     ),
-                                                  ],
+                                                  ),
                                                 )
+                                              ],
+                                            )
                                     ],
                                   ),
                           ),
