@@ -11,12 +11,12 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final String hintTextValue;
   CustomTextFormField({
-    this.valueKey,
-    this.errorMessage,
-    this.saveVariable,
-    this.inputlength,
-    this.keyboardType,
-    this.hintTextValue,
+    @required this.valueKey,
+    @required this.errorMessage,
+    @required this.saveVariable,
+    @required this.inputlength,
+    @required this.keyboardType,
+    @required this.hintTextValue,
   });
 
   @override

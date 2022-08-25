@@ -4,11 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
 import 'package:hal_aur_ham_v2/Screens/News_Detail_Screen.dart';
 import 'package:hal_aur_ham_v2/Screens/Scan_Result_Copy.dart';
+import 'package:hal_aur_ham_v2/Screens/Settings/SettingsScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'Screens/Loading_Screen.dart';
 
+import './Screens/Settings/SettingsScreen.dart';
 import './Model/ProfileModel.dart';
 import './Screens/Crop_Scan.dart';
 import './Screens/Crop_Viz.dart';
@@ -64,6 +66,7 @@ class MyApp extends StatelessWidget {
             NewsDetail.routeName: (ctx) => NewsDetail(),
             chooseCrop.routeName: (ctx) => chooseCrop(),
             LoadingScreen.routeName: (ctx) => LoadingScreen(),
+            SettingsScreen.routeName:(ctx)=>SettingsScreen(),
           },
         ),
       ),
