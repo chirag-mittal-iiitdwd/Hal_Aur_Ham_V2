@@ -2,13 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hal_aur_ham_v2/Screens/Login_Register.dart';
+import 'package:hal_aur_ham_v2/Components/LogoutButton.dart';
+import 'package:hal_aur_ham_v2/Screens/Auth/Login_Register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hal_aur_ham_v2/Screens/Profile/Widgets/ChangeLocation.dart';
 import 'package:http/http.dart' as http;
 
-import '../Components/App_Drawer.dart';
+import '../../Components/App Drawer/App_Drawer.dart';
 
 class Profile extends StatefulWidget {
   static const routeName = '/profile';
@@ -23,13 +25,6 @@ class _ProfileState extends State<Profile> {
   String aadhar = '';
   String phone = '';
   String _image = '';
-  // File file;
-
-  // Future<File> urlToFile(String imageUrl) async {
-  //   final response = await http.get(Uri.parse(imageUrl));
-  //   await file.writeAsBytes(response.bodyBytes);
-  //   return file;
-  // }
 
   void yourFunction(BuildContext context) async {
     setState(() {
@@ -169,79 +164,11 @@ class _ProfileState extends State<Profile> {
                               SizedBox(
                                 height: 8.h,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.green[800],
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.r),
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      // Navigator.of(context).pushReplacementNamed(
-                                      //     LoginRegister.routeName);
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Change Location  ",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 22.sp,
-                                          ),
-                                        ),
-                                        Icon(
-                                          Icons.location_pin,
-                                          color: Colors.black,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              ChangeLocation(),
                               SizedBox(
                                 height: 1.h,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.red[800],
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.r),
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .pushReplacementNamed(
-                                              LoginRegister.routeName);
-                                    },
-                                    child: GestureDetector(
-                                      onTap: logOut,
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "Logout  ",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 22.sp,
-                                            ),
-                                          ),
-                                          Icon(
-                                            Icons.logout,
-                                            color: Colors.black,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              LogoutButton(Buttontext: 'Logout'),
                             ],
                           ),
                   ),
