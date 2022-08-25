@@ -69,60 +69,62 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                   borderRadius: BorderRadius.circular(20.r),
                   child: Container(
                     color: Color(0xA8FFDFB0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 80.w),
-                            margin: EdgeInsets.only(top: 10.h),
-                            child: Image.asset('Assets/Images/App_Logo.png'),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              top: 5.h,
+                    child: Center(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 80.w),
+                              margin: EdgeInsets.only(top: 10.h),
+                              child: Image.asset('Assets/Images/App_Logo.png'),
                             ),
-                            child: Text(
-                              'Enter OTP',
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w900,
+                            Container(
+                              margin: EdgeInsets.only(
+                                top: 5.h,
+                              ),
+                              child: Text(
+                                'Enter OTP',
+                                style: TextStyle(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w900,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Form(
-                            key: _formKey,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 35.w,
-                                    vertical: 8.h,
-                                  ),
-                                  child: CustomTextFormField(
-                                    errorMessage:
-                                        "OTP Should be exactly 6 digits long",
-                                    saveVariable: _saveOtp,
-                                    valueKey: "Otp",
-                                    hintTextValue: "Enter Otp",
-                                    inputlength: 6,
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Color(0xff0876B5),
-                                  ),
-                                  onPressed: verifyOTP,
-                                  child: Text("Submit"),
-                                ),
-                              ],
+                            SizedBox(
+                              height: 10.h,
                             ),
-                          ),
-                        ],
+                            Form(
+                              key: _formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 35.w,
+                                      vertical: 8.h,
+                                    ),
+                                    child: CustomTextFormField(
+                                      errorMessage:
+                                          "OTP Should be exactly 6 digits long",
+                                      saveVariable: _saveOtp,
+                                      valueKey: "Otp",
+                                      hintTextValue: "Enter Otp",
+                                      inputlength: 6,
+                                      keyboardType: TextInputType.number,
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Color(0xff0876B5),
+                                    ),
+                                    onPressed: verifyOTP,
+                                    child: Text("Submit"),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

@@ -90,65 +90,67 @@ class _LoginRegisterState extends State<LoginRegister> {
                   borderRadius: BorderRadius.circular(20.r),
                   child: Container(
                     color: Color(0xA8FFDFB0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 80.w),
-                            margin: EdgeInsets.only(top: 10.h),
-                            child: Image.asset('Assets/Images/App_Logo.png'),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              top: 5.h,
+                    child: Center(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 80.w),
+                              margin: EdgeInsets.only(top: 10.h),
+                              child: Image.asset('Assets/Images/App_Logo.png'),
                             ),
-                            child: Text(
-                              "Please Enter Your Mobile No",
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w900,
+                            Container(
+                              margin: EdgeInsets.only(
+                                top: 5.h,
+                              ),
+                              child: Text(
+                                "Please Enter Your Mobile No",
+                                style: TextStyle(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w900,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Form(
-                            key: _formKey,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 35.w,
-                                    vertical: 8.h,
-                                  ),
-                                  child: CustomTextFormField(
-                                    errorMessage:
-                                        "Phone Number should be exactly 10 digits long",
-                                    saveVariable: _savePhoneNumber,
-                                    valueKey: "Phone",
-                                    inputlength: 10,
-                                    keyboardType: TextInputType.phone,
-                                    hintTextValue: 'Phone No',
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Color(0xff0876B5),
-                                  ),
-                                  onPressed: _isLoading ? null : _trySubmit,
-                                  child: _isLoading
-                                      ? CircularProgressIndicator()
-                                      : Text("Submit"),
-                                ),
-                              ],
+                            SizedBox(
+                              height: 10.h,
                             ),
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                        ],
+                            Form(
+                              key: _formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 35.w,
+                                      vertical: 8.h,
+                                    ),
+                                    child: CustomTextFormField(
+                                      errorMessage:
+                                          "Phone Number should be exactly 10 digits long",
+                                      saveVariable: _savePhoneNumber,
+                                      valueKey: "Phone",
+                                      inputlength: 10,
+                                      keyboardType: TextInputType.phone,
+                                      hintTextValue: 'Phone No',
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Color(0xff0876B5),
+                                    ),
+                                    onPressed: _isLoading ? null : _trySubmit,
+                                    child: _isLoading
+                                        ? CircularProgressIndicator()
+                                        : Text("Submit"),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

@@ -9,8 +9,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../Components/App Drawer/App_Drawer.dart';
 import 'package:hal_aur_ham_v2/Screens/WelcomeScreen/Widgets/NewsCarasoul.dart';
 import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
-import 'package:hal_aur_ham_v2/Screens/Crop_Viz.dart';
-import 'package:hal_aur_ham_v2/Screens/Drone_Status.dart';
+import 'package:hal_aur_ham_v2/Screens/Crop%20Viz/Crop_Viz.dart';
+import 'package:hal_aur_ham_v2/Screens/Drone%20Status/Drone_Status.dart';
 import 'package:hal_aur_ham_v2/Screens/Auth/Enter_user_details.dart';
 import 'package:hal_aur_ham_v2/Screens/Weather/Weather.dart';
 

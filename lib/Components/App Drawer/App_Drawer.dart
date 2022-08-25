@@ -6,10 +6,10 @@ import 'package:hal_aur_ham_v2/Components/LogoutButton.dart';
 import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
 import 'package:hal_aur_ham_v2/Screens/Community/Community_screen.dart';
 import 'package:hal_aur_ham_v2/Screens/Crop_Scan.dart';
-import 'package:hal_aur_ham_v2/Screens/Crop_Viz.dart';
-import 'package:hal_aur_ham_v2/Screens/Drone_Status.dart';
+import 'package:hal_aur_ham_v2/Screens/Crop%20Viz/Crop_Viz.dart';
+import 'package:hal_aur_ham_v2/Screens/Drone%20Status/Drone_Status.dart';
 import 'package:hal_aur_ham_v2/Screens/Auth/Login_Register.dart';
-import 'package:hal_aur_ham_v2/Screens/Profile_Screen.dart';
+import 'package:hal_aur_ham_v2/Screens/Profile/Profile_Screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hal_aur_ham_v2/Screens/Settings/SettingsScreen.dart';
 
@@ -67,7 +67,7 @@ class AppDrawer extends StatelessWidget {
                 AppDrawerElement(routeName: Profile.routeName, icon: Icons.supervised_user_circle, label: 'User Profile'),
                 AppDrawerElement(routeName: WelcomeScreen.routName, icon: Icons.home, label: "Home"),
                 AppDrawerElement(routeName: WeatherScreen.routeName, icon: Icons.cloud, label: 'Weather'),
-                AppDrawerElement(routeName: DroneStatus.routeName, icon: Icons.cloud, label: 'Drone Status'),
+                AppDrawerElement(routeName: DroneStatus.routeName, icon: Icons.flight, label: 'Drone Status'),
                 AppDrawerElement(routeName: CropVizScreen.routeName, icon: Icons.auto_graph, label: 'Crop Viz'),
                 AppDrawerElement(routeName: chooseCrop.routeName, icon: Icons.document_scanner_outlined, label: 'Crop Scan'),
                 AppDrawerElement(routeName: CommunityScreen.routeName, icon: Icons.people, label: 'Community'),

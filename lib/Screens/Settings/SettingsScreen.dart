@@ -43,7 +43,7 @@ class SettingsScreen extends StatelessWidget {
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 28.w),
                           child: Text(
-                            'Crop Vizualisation',
+                            'Settings',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,

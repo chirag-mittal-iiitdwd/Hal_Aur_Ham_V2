@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hal_aur_ham_v2/Screens/Profile_Screen.dart';
+import 'package:hal_aur_ham_v2/Screens/Profile/Profile_Screen.dart';
 
 class ProfileDetails {
   final String name;
