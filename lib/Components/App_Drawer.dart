@@ -5,12 +5,12 @@ import 'package:hal_aur_ham_v2/Screens/Community/Community_screen.dart';
 import 'package:hal_aur_ham_v2/Screens/Crop_Scan.dart';
 import 'package:hal_aur_ham_v2/Screens/Crop_Viz.dart';
 import 'package:hal_aur_ham_v2/Screens/Drone_Status.dart';
-import 'package:hal_aur_ham_v2/Screens/Login_Register.dart';
+import 'package:hal_aur_ham_v2/Screens/Auth/Login_Register.dart';
 import 'package:hal_aur_ham_v2/Screens/Profile_Screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../Screens/Weather/Weather.dart';
-import '../Screens/WelcomeScreen.dart';
+import '../Screens/WelcomeScreen/WelcomeScreen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override

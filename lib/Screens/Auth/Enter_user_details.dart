@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hal_aur_ham_v2/Components/user_image_picker.dart';
-import 'package:hal_aur_ham_v2/Screens/WelcomeScreen.dart';
+import 'package:hal_aur_ham_v2/Screens/WelcomeScreen/WelcomeScreen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:location/location.dart' as loc;
 

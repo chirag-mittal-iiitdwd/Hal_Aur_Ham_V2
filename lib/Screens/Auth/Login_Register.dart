@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hal_aur_ham_v2/Screens/Verify_otp_screen.dart';
+import 'package:hal_aur_ham_v2/Screens/Auth/Verify_otp_screen.dart';
 
-enum AuthMode { Login, Register }
+// enum AuthMode { Login, Register }
 
 class LoginRegister extends StatefulWidget {
   static const routeName = '/login_register';
@@ -15,7 +15,7 @@ class LoginRegister extends StatefulWidget {
 
 class _LoginRegisterState extends State<LoginRegister> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  AuthMode _authMode = AuthMode.Login;
+  // AuthMode _authMode = AuthMode.Login;
   String _phoneNumber;
   // String _aadharNumber;
 
@@ -52,7 +52,6 @@ class _LoginRegisterState extends State<LoginRegister> {
       _formKey.currentState.save();
       sendOTP();
       print(_phoneNumber);
-      // print(_aadharNumber);
     }
   }
 
@@ -89,9 +88,7 @@ class _LoginRegisterState extends State<LoginRegister> {
                               top: 5.h,
                             ),
                             child: Text(
-                              _authMode == AuthMode.Login
-                                  ? 'Login'
-                                  : 'Register',
+                              "Please Enter Your Mobile No",
                               style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w900,
@@ -154,55 +151,6 @@ class _LoginRegisterState extends State<LoginRegister> {
                                     ),
                                   ),
                                 ),
-                                // if (_authMode == AuthMode.Register)
-                                //   Padding(
-                                //     padding: EdgeInsets.symmetric(
-                                //       horizontal: 35.w,
-                                //       vertical: 8.h,
-                                //     ),
-                                //     child: TextFormField(
-                                //       key: ValueKey('aadhar'),
-                                //       validator: (value) {
-                                //         if (value.length == 12) {
-                                //           return null;
-                                //         }
-                                //         return 'Aadhar Number Should Be Exactly 12 digits long';
-                                //       },
-                                //       onSaved: (value) {
-                                //         _aadharNumber = value;
-                                //       },
-                                //       keyboardType: TextInputType.phone,
-                                //       autofocus: false,
-                                //       style: TextStyle(
-                                //         fontSize: 15.sp,
-                                //         color: Colors.black,
-                                //       ),
-                                //       decoration: InputDecoration(
-                                //         border: InputBorder.none,
-                                //         hintText: 'Aadhar Number',
-                                //         filled: true,
-                                //         fillColor: Color(0x99FFDFB0),
-                                //         contentPadding: const EdgeInsets.only(
-                                //           left: 14.0,
-                                //           bottom: 6.0,
-                                //           top: 8.0,
-                                //         ),
-                                //         focusedBorder: OutlineInputBorder(
-                                //           borderSide: BorderSide(
-                                //             color: Color(0x99FFDFB0),
-                                //           ),
-                                //           borderRadius:
-                                //               BorderRadius.circular(10.r),
-                                //         ),
-                                //         enabledBorder: UnderlineInputBorder(
-                                //           borderSide:
-                                //               BorderSide(color: Colors.grey),
-                                //           borderRadius:
-                                //               BorderRadius.circular(10.r),
-                                //         ),
-                                //       ),
-                                //     ),
-                                //   ),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     primary: Color(0xff0876B5),
@@ -213,53 +161,6 @@ class _LoginRegisterState extends State<LoginRegister> {
                               ],
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 10.w,
-                                  right: 10.w,
-                                  top: 8.h,
-                                ),
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: Image.asset(
-                                    'Assets/Images/linkedin.png',
-                                    height: 90.h,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 10.w,
-                                  right: 10.w,
-                                  top: 8.h,
-                                ),
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.facebook,
-                                    size: 50.h,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 10.w,
-                                  right: 10.w,
-                                  top: 8.h,
-                                ),
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: Image.asset(
-                                    'Assets/Images/twitter.png',
-                                    height: 90.h,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
                           SizedBox(
                             height: 20.h,
                           ),
@@ -268,31 +169,6 @@ class _LoginRegisterState extends State<LoginRegister> {
                     ),
                   ),
                 ),
-                // footer: FlatButton(
-                //   color: Color(0x8A1A6114),
-                //   child: GridTileBar(
-                //     title: Text(
-                //       _authMode == AuthMode.Register
-                //           ? 'Login Instead'
-                //           : 'Register Instead',
-                //       textAlign: TextAlign.center,
-                //       style: TextStyle(
-                //         color: Colors.black,
-                //         fontWeight: FontWeight.bold,
-                //         fontSize: 22.sp,
-                //       ),
-                //     ),
-                //   ),
-                //   onPressed: () {
-                //     setState(() {
-                //       if (_authMode == AuthMode.Login) {
-                //         _authMode = AuthMode.Register;
-                //       } else {
-                //         _authMode = AuthMode.Login;
-                //       }
-                //     });
-                //   },
-                // ),
               ),
             ),
           ],

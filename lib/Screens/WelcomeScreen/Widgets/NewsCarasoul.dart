@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hal_aur_ham_v2/Screens/News_Detail_Screen.dart';
 import 'package:provider/provider.dart';
 
-import '../Model/NewsItems.dart';
+import '../../../Model/NewsItems.dart';
 
 class NewsCarasoul extends StatefulWidget {
   @override

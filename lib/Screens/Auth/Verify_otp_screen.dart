@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:hal_aur_ham_v2/Screens/WelcomeScreen.dart';
+import 'package:hal_aur_ham_v2/Screens/WelcomeScreen/WelcomeScreen.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
   final String verificationId;

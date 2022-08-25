@@ -17,10 +17,10 @@ import './Screens/Scan_Result.dart';
 import './Screens/Profile_Screen.dart';
 import '../Model/Weather_Model.dart';
 import '../Screens/Weather/Weather.dart';
-import '../Screens/Login_Register.dart';
-import './Screens/Login_Register.dart';
+import 'Screens/Auth/Login_Register.dart';
+import 'Screens/Auth/Login_Register.dart';
 import './Model/NewsItems.dart';
-import './Screens/WelcomeScreen.dart';
+import 'Screens/WelcomeScreen/WelcomeScreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hal_aur_ham_v2/Screens/WelcomeScreen/Widgets/Button.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../Components/App_Drawer.dart';
-import 'package:hal_aur_ham_v2/Components/NewsCarasoul.dart';
+import '../../Components/App_Drawer.dart';
+import 'package:hal_aur_ham_v2/Screens/WelcomeScreen/Widgets/NewsCarasoul.dart';
 import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
 import 'package:hal_aur_ham_v2/Screens/Crop_Viz.dart';
 import 'package:hal_aur_ham_v2/Screens/Drone_Status.dart';
-import 'package:hal_aur_ham_v2/Screens/Enter_user_details.dart';
+import 'package:hal_aur_ham_v2/Screens/Auth/Enter_user_details.dart';
 import 'package:hal_aur_ham_v2/Screens/Weather/Weather.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -102,7 +103,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     margin: EdgeInsets.only(top: 60.h),
                     child: _isloading
                         ? Center(
-                            child: CircularProgressIndicator(),
+                            child: RefreshProgressIndicator(),
                           )
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,54 +154,21 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  FlatButton(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .pushReplacementNamed(
-                                              WeatherScreen.routeName);
-                                    },
-                                    child: ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.circular(100.r),
-                                      child: Image.asset(
-                                        'Assets/Images/weather.png',
-                                        height: 60.h,
-                                      ),
-                                    ),
+                                  Button(
+                                    routeName: WeatherScreen.routeName,
+                                    imageRoute: 'Assets/Images/weather.png',
                                   ),
-                                  FlatButton(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .pushNamed(chooseCrop.routeName);
-                                    },
-                                    child: Image.asset(
-                                      'Assets/Images/camera.png',
-                                      height: 60.h,
-                                    ),
+                                  Button(
+                                    routeName: chooseCrop.routeName,
+                                    imageRoute: 'Assets/Images/camera.png',
                                   ),
-                                  FlatButton(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .pushNamed(CropVizScreen.routeName);
-                                    },
-                                    child: ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.circular(100.r),
-                                      child: Image.asset(
-                                        'Assets/Images/graph.jpg',
-                                        height: 60.h,
-                                      ),
-                                    ),
+                                  Button(
+                                    routeName: CropVizScreen.routeName,
+                                    imageRoute: 'Assets/Images/graph.jpg',
                                   ),
-                                  FlatButton(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .pushNamed(DroneStatus.routeName);
-                                    },
-                                    child: Image.asset(
-                                      'Assets/Images/drone.png',
-                                      height: 60.h,
-                                    ),
+                                  Button(
+                                    routeName: DroneStatus.routeName,
+                                    imageRoute: 'Assets/Images/drone.png',
                                   ),
                                 ],
                               ),
