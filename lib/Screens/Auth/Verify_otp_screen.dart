@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hal_aur_ham_v2/Screens/Auth/Widgets/CustomTextFormField.dart';
 
 import 'package:hal_aur_ham_v2/Screens/WelcomeScreen/WelcomeScreen.dart';
 
@@ -16,27 +17,35 @@ class VerifyOtpScreen extends StatefulWidget {
 }
 
 class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
-  TextEditingController otpController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  String _otp;
+  void _saveOtp(value) {
+    _otp = value;
+  }
 
   void verifyOTP() async {
-    String otp = otpController.text.trim();
+    bool isValid = _formKey.currentState.validate();
+    if (isValid) {
+      _formKey.currentState.save();
+      _otp.trim();
 
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: widget.verificationId, smsCode: otp);
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+          verificationId: widget.verificationId, smsCode: _otp);
 
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-      if (userCredential.user != null) {
-        Navigator.popUntil(context, (route) => route.isFirst);
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => WelcomeScreen(),
-            ));
+      try {
+        UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithCredential(credential);
+        if (userCredential.user != null) {
+          Navigator.popUntil(context, (route) => route.isFirst);
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => WelcomeScreen(),
+              ));
+        }
+      } on FirebaseAuthException catch (ex) {
+        log(ex.code.toString());
       }
-    } on FirebaseAuthException catch (ex) {
-      log(ex.code.toString());
     }
   }
 
@@ -83,27 +92,35 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          TextField(
-                            controller: otpController,
-                            maxLength: 6,
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                              labelText: "6-Digit OTP",
-                              counterText: "",
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 35.w,
+                                    vertical: 8.h,
+                                  ),
+                                  child: CustomTextFormField(
+                                    errorMessage:
+                                        "OTP Should be exactly 6 digits long",
+                                    saveVariable: _saveOtp,
+                                    valueKey: "Otp",
+                                    hintTextValue: "Enter Otp",
+                                    inputlength: 6,
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Color(0xff0876B5),
+                                  ),
+                                  onPressed: verifyOTP,
+                                  child: Text("Submit"),
+                                ),
+                              ],
                             ),
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          CupertinoButton(
-                            onPressed: () {
-                              verifyOTP();
-                            },
-                            color: Colors.blue,
-                            child: Text("Verify"),
-                          ),
-                          SizedBox(
-                            height: 20.h,
                           ),
                         ],
                       ),

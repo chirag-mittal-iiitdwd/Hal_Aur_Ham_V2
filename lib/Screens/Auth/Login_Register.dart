@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hal_aur_ham_v2/Screens/Auth/Verify_otp_screen.dart';
+import 'package:hal_aur_ham_v2/Screens/Auth/Widgets/CustomTextFormField.dart';
 
 // enum AuthMode { Login, Register }
 
@@ -15,9 +16,12 @@ class LoginRegister extends StatefulWidget {
 
 class _LoginRegisterState extends State<LoginRegister> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  // AuthMode _authMode = AuthMode.Login;
   String _phoneNumber;
-  // String _aadharNumber;
+  bool _isLoading = false;
+
+  void _savePhoneNumber(String value) {
+    _phoneNumber = value;
+  }
 
   void sendOTP() async {
     String phone = "+91" + _phoneNumber.trim();
@@ -25,6 +29,10 @@ class _LoginRegisterState extends State<LoginRegister> {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phone,
       codeSent: (verificationId, resendToken) {
+        print('code sent');
+        setState(() {
+          _isLoading = false;
+        });
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -34,18 +42,21 @@ class _LoginRegisterState extends State<LoginRegister> {
           ),
         );
       },
-      verificationCompleted: (credential) async {
-        await print('verification completed');
+      verificationCompleted: (credential) {
+        // await print('verification completed');
       },
       verificationFailed: (ex) {
-        log(ex.code.toString());
+        // log(ex.code.toString());
       },
       codeAutoRetrievalTimeout: (verificationId) {},
       timeout: Duration(seconds: 120),
     );
   }
 
-  void _trySubmit() {
+  void _trySubmit(){
+    setState(() {
+      _isLoading = true;
+    });
     FocusScope.of(context).unfocus();
     final isVaild = _formKey.currentState.validate();
     if (isVaild) {
@@ -53,6 +64,10 @@ class _LoginRegisterState extends State<LoginRegister> {
       sendOTP();
       print(_phoneNumber);
     }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -108,55 +123,24 @@ class _LoginRegisterState extends State<LoginRegister> {
                                     horizontal: 35.w,
                                     vertical: 8.h,
                                   ),
-                                  child: TextFormField(
-                                    key: ValueKey('phone'),
-                                    validator: (value) {
-                                      if (value.length == 10) {
-                                        return null;
-                                      }
-                                      return 'Phone number should be exactly 10 digits long';
-                                    },
-                                    onSaved: (value) {
-                                      _phoneNumber = value;
-                                    },
+                                  child: CustomTextFormField(
+                                    errorMessage:
+                                        "Phone Number should be exactly 10 digits long",
+                                    saveVariable: _savePhoneNumber,
+                                    valueKey: "Phone",
+                                    inputlength: 10,
                                     keyboardType: TextInputType.phone,
-                                    autofocus: false,
-                                    style: TextStyle(
-                                      fontSize: 15.sp,
-                                      color: Colors.black,
-                                    ),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: 'Mobile No',
-                                      filled: true,
-                                      fillColor: Color(0x99FFDFB0),
-                                      contentPadding: const EdgeInsets.only(
-                                        left: 14.0,
-                                        bottom: 6.0,
-                                        top: 8.0,
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x99FFDFB0),
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(10.r),
-                                      ),
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.grey),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                    ),
+                                    hintTextValue: 'Phone No',
                                   ),
                                 ),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     primary: Color(0xff0876B5),
                                   ),
-                                  onPressed: _trySubmit,
-                                  child: Text("Submit"),
+                                  onPressed: _isLoading ? null : _trySubmit,
+                                  child: _isLoading
+                                      ? CircularProgressIndicator()
+                                      : Text("Submit"),
                                 ),
                               ],
                             ),

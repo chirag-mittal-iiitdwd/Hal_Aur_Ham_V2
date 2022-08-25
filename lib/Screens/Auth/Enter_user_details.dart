@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hal_aur_ham_v2/Components/LogoutButton.dart';
 import 'package:hal_aur_ham_v2/Components/user_image_picker.dart';
+import 'package:hal_aur_ham_v2/Screens/Auth/Widgets/CustomTextFormField.dart';
 import 'package:hal_aur_ham_v2/Screens/WelcomeScreen/WelcomeScreen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:location/location.dart' as loc;
@@ -22,6 +24,14 @@ class _RegiserationFormState extends State<RegiserationForm> {
   double lat;
   double lon;
   bool _isloading = false;
+
+  void _saveName(String value) {
+    name = value;
+  }
+
+  void _saveAadhar(String value) {
+    aadhar = value;
+  }
 
   void _pickedImage(File image) {
     _userImageFile = image;
@@ -134,6 +144,7 @@ class _RegiserationFormState extends State<RegiserationForm> {
                           Form(
                             key: _formKey,
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 SizedBox(
                                   height: 20.h,
@@ -147,111 +158,43 @@ class _RegiserationFormState extends State<RegiserationForm> {
                                     horizontal: 35.w,
                                     vertical: 8.h,
                                   ),
-                                  child: TextFormField(
-                                    key: ValueKey('name'),
-                                    validator: (value) {
-                                      if (value.length != 0) {
-                                        return null;
-                                      }
-                                      return 'Name cannot be empty';
-                                    },
-                                    onSaved: (value) {
-                                      print(value);
-                                      name = value;
-                                    },
-                                    keyboardType: TextInputType.text,
-                                    autofocus: false,
-                                    style: TextStyle(
-                                      fontSize: 15.sp,
-                                      color: Colors.black,
-                                    ),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: 'Full Name',
-                                      filled: true,
-                                      fillColor: Color(0x99FFDFB0),
-                                      contentPadding: const EdgeInsets.only(
-                                        left: 14.0,
-                                        bottom: 6.0,
-                                        top: 8.0,
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x99FFDFB0),
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(10.r),
-                                      ),
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.grey),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                    ),
+                                  child: CustomTextFormField(
+                                    errorMessage: "Name Cannot be empty",
+                                    saveVariable: _saveName,
+                                    valueKey: "Name",
+                                    inputlength: 10000,
+                                    keyboardType: TextInputType.name,
+                                    hintTextValue: 'Full Name',
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 5.h,
                                 ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 35.w,
                                     vertical: 8.h,
                                   ),
-                                  child: TextFormField(
-                                    key: ValueKey('aadhar'),
-                                    validator: (value) {
-                                      if (value.length == 12) {
-                                        return null;
-                                      }
-                                      return 'Aadhar number must be 12 digits long';
-                                    },
-                                    onSaved: (value) {
-                                      aadhar = value;
-                                    },
-                                    keyboardType: TextInputType.phone,
-                                    autofocus: false,
-                                    style: TextStyle(
-                                      fontSize: 15.sp,
-                                      color: Colors.black,
-                                    ),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: 'Aadhar Number',
-                                      filled: true,
-                                      fillColor: Color(0x99FFDFB0),
-                                      contentPadding: const EdgeInsets.only(
-                                        left: 14.0,
-                                        bottom: 6.0,
-                                        top: 8.0,
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x99FFDFB0),
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(10.r),
-                                      ),
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.grey),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                    ),
+                                  child: CustomTextFormField(
+                                    errorMessage: "Aadhar Should be exactly 12 digits long",
+                                    saveVariable: _saveAadhar,
+                                    valueKey: "Aadhar",
+                                    inputlength: 12,
+                                    keyboardType: TextInputType.number,
+                                    hintTextValue: 'Aadhar Number',
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 20.h,
                                 ),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     primary: Color(0xff0876B5),
                                   ),
-                                  onPressed:_isloading?null: _trySubmit,
-                                  child: _isloading?CircularProgressIndicator(): Text("Submit Details"),
+                                  onPressed: _isloading ? null : _trySubmit,
+                                  child: _isloading
+                                      ? CircularProgressIndicator()
+                                      : Text("Submit Details"),
                                 ),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                LogoutButton(
+                                    Buttontext: "Use Different Number ?",),
                               ],
                             ),
                           ),
