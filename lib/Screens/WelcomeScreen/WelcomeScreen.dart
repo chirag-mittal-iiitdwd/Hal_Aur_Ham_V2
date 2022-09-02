@@ -103,7 +103,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     margin: EdgeInsets.only(top: 60.h),
                     child: _isloading
                         ? Center(
-                            child: RefreshProgressIndicator(),
+                            child: CircularProgressIndicator(),
                           )
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

@@ -40,7 +40,7 @@ class _LoginRegisterState extends State<LoginRegister> {
         _isLoading = false;
       });
 
-      if(authCredential.user!=null){
+      if (authCredential.user != null) {
         Navigator.popUntil(context, (route) => route.isFirst);
         Navigator.pushReplacement(
           context,
@@ -96,7 +96,20 @@ class _LoginRegisterState extends State<LoginRegister> {
             _verificationId = verificationId;
           });
         },
-        codeAutoRetrievalTimeout: (verificationId) async {},
+        codeAutoRetrievalTimeout: (verificationId) async {
+          _scaffoldKey.currentState.showSnackBar(
+            SnackBar(
+              content:
+                  Text("Timeout !!, Please enter another OTP we just sent you"),
+              backgroundColor: Theme.of(context).errorColor,
+            ),
+          );
+
+          setState(() {
+            verificationId = verificationId;
+          });
+        },
+        timeout: Duration(seconds: 30),
       );
     } else {
       setState(() {
@@ -147,7 +160,7 @@ class _LoginRegisterState extends State<LoginRegister> {
             style: ElevatedButton.styleFrom(
               primary: Color(0xff0876B5),
             ),
-            onPressed: _isLoading? null:_validateAndSubmitPhone,
+            onPressed: _isLoading ? null : _validateAndSubmitPhone,
             child: Text("Submit"),
           ),
         ],
@@ -183,7 +196,7 @@ class _LoginRegisterState extends State<LoginRegister> {
             style: ElevatedButton.styleFrom(
               primary: Color(0xff0876B5),
             ),
-            onPressed: _isLoading? null:_validateOtpAndVerify,
+            onPressed: _isLoading ? null : _validateOtpAndVerify,
             child: Text("Verify"),
           ),
         ],

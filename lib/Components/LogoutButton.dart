@@ -21,8 +21,18 @@ class LogoutButton extends StatelessWidget {
     }
 
     return ElevatedButton.icon(
-      onPressed: logOut, 
-      icon: Icon(Icons.logout,color: Colors.black,), 
-      label: Text(Buttontext),style: ElevatedButton.styleFrom(primary:Colors.red[800]),);
+      onPressed: logOut,
+      icon: Icon(
+        Icons.logout,
+        color: Colors.black,
+      ),
+      label: Text(Buttontext),
+      style: ElevatedButton.styleFrom(
+        primary: Theme.of(context).errorColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+      ),
+    );
   }
 }

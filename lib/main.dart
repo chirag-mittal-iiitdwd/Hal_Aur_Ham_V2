@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
+import 'package:hal_aur_ham_v2/Screens/Community/Community_screen.dart';
 import 'package:hal_aur_ham_v2/Screens/News%20Detail/News_Detail_Screen.dart';
 import 'package:hal_aur_ham_v2/Screens/Scan_Result_Copy.dart';
 import 'package:hal_aur_ham_v2/Screens/Settings/SettingsScreen.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             fontFamily: GoogleFonts.montserrat().fontFamily,
             primarySwatch: Colors.blue,
+            
           ),
           home: (FirebaseAuth.instance.currentUser != null)
               ? WelcomeScreen()
@@ -67,6 +69,7 @@ class MyApp extends StatelessWidget {
             chooseCrop.routeName: (ctx) => chooseCrop(),
             LoadingScreen.routeName: (ctx) => LoadingScreen(),
             SettingsScreen.routeName:(ctx)=>SettingsScreen(),
+            CommunityScreen.routeName:(ctx)=>CommunityScreen(),
           },
         ),
       ),
