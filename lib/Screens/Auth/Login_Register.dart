@@ -1,12 +1,14 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hal_aur_ham_v2/Screens/Auth/Verify_otp_screen.dart';
 import 'package:hal_aur_ham_v2/Screens/Auth/Widgets/CustomTextFormField.dart';
+import 'package:hal_aur_ham_v2/Screens/WelcomeScreen/WelcomeScreen.dart';
 
-// enum AuthMode { Login, Register }
+enum VerifyState {
+  formState,
+  otpState,
+}
 
 class LoginRegister extends StatefulWidget {
   static const routeName = '/login_register';
@@ -15,65 +17,186 @@ class LoginRegister extends StatefulWidget {
 }
 
 class _LoginRegisterState extends State<LoginRegister> {
-  final GlobalKey<FormState> _formKey = GlobalKey();
-  String _phoneNumber;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  VerifyState currentState = VerifyState.formState;
+  final _phoneFormKey = GlobalKey<FormState>();
+  final _otpFormKey = GlobalKey<FormState>();
+  String _phone;
+  String _otp;
+  String _verificationId;
   bool _isLoading = false;
 
-  void _savePhoneNumber(String value) {
-    _phoneNumber = value;
-  }
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
-  void sendOTP() async {
-    String phone = "+91" + _phoneNumber.trim();
-
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: phone,
-      codeSent: (verificationId, resendToken) {
-        print('code sent');
-        setState(() {
-          _isLoading = false;
-        });
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => VerifyOtpScreen(
-              verificationId: verificationId,
-            ),
-          ),
-        );
-      },
-      verificationCompleted: (credential) {
-        // await print('verification completed');
-      },
-      verificationFailed: (ex) {
-        // log(ex.code.toString());
-      },
-      codeAutoRetrievalTimeout: (verificationId) {},
-      timeout: Duration(seconds: 120),
-    );
-  }
-
-  void _trySubmit(){
+  void signInWithPhoneAuthCRedential(
+      PhoneAuthCredential phoneAuthCredential) async {
     setState(() {
       _isLoading = true;
     });
-    FocusScope.of(context).unfocus();
-    final isVaild = _formKey.currentState.validate();
-    if (isVaild) {
-      _formKey.currentState.save();
-      sendOTP();
-      print(_phoneNumber);
+    try {
+      final authCredential =
+          await _auth.signInWithCredential(phoneAuthCredential);
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      if(authCredential.user!=null){
+        Navigator.popUntil(context, (route) => route.isFirst);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WelcomeScreen(),
+          ),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text(e.message),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
+    }
+  }
+
+  void _validateAndSubmitPhone() async {
+    setState(() {
+      _isLoading = true;
+    });
+    bool isValid = _phoneFormKey.currentState.validate();
+    if (isValid) {
+      FocusScope.of(context).unfocus();
+      _phoneFormKey.currentState.save();
+      await _auth.verifyPhoneNumber(
+        phoneNumber: "+91" + _phone,
+        verificationCompleted: (phoneAuthCredential) async {
+          setState(() {
+            _isLoading = false;
+          });
+          signInWithPhoneAuthCRedential(phoneAuthCredential);
+        },
+        verificationFailed: (verificationFailed) async {
+          setState(() {
+            _isLoading = false;
+          });
+          _scaffoldKey.currentState.showSnackBar(
+            SnackBar(
+              content: Text(verificationFailed.message),
+              backgroundColor: Theme.of(context).errorColor,
+            ),
+          );
+        },
+        codeSent: (verificationId, resendingToken) async {
+          setState(() {
+            _isLoading = false;
+            currentState = VerifyState.otpState;
+            _verificationId = verificationId;
+          });
+        },
+        codeAutoRetrievalTimeout: (verificationId) async {},
+      );
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  void _validateOtpAndVerify() async {
+    bool isValid = _otpFormKey.currentState.validate();
+    if (isValid) {
+      FocusScope.of(context).unfocus();
+      _otpFormKey.currentState.save();
+      PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
+        verificationId: _verificationId,
+        smsCode: _otp,
+      );
+
+      signInWithPhoneAuthCRedential(phoneAuthCredential);
+    }
+  }
+
+  getForm(BuildContext contex) {
+    void _savePhone(value) {
+      _phone = value;
     }
 
-    setState(() {
-      _isLoading = false;
-    });
+    return Form(
+      key: _phoneFormKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 35.w,
+              vertical: 8.h,
+            ),
+            child: CustomTextFormField(
+              errorMessage: "Phone Number should be exactly 10 digits long",
+              saveVariable: _savePhone,
+              valueKey: "Phone",
+              inputlength: 10,
+              keyboardType: TextInputType.phone,
+              hintTextValue: 'Phone Number',
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Color(0xff0876B5),
+            ),
+            onPressed: _isLoading? null:_validateAndSubmitPhone,
+            child: Text("Submit"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  getOtp(BuildContext contex) {
+    void _saveOtp(value) {
+      _otp = value;
+    }
+
+    return Form(
+      key: _otpFormKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 35.w,
+              vertical: 8.h,
+            ),
+            child: CustomTextFormField(
+              errorMessage: "Otp Should be exactly 6 digits long",
+              saveVariable: _saveOtp,
+              valueKey: "otp",
+              inputlength: 6,
+              keyboardType: TextInputType.number,
+              hintTextValue: 'Enter Otp',
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Color(0xff0876B5),
+            ),
+            onPressed: _isLoading? null:_validateOtpAndVerify,
+            child: Text("Verify"),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldKey,
         body: Stack(
           children: [
             Image.asset(
@@ -104,7 +227,9 @@ class _LoginRegisterState extends State<LoginRegister> {
                                 top: 5.h,
                               ),
                               child: Text(
-                                "Please Enter Your Mobile No",
+                                currentState == VerifyState.formState
+                                    ? "Enter Your Mobile Number"
+                                    : "Enter the OTP",
                                 style: TextStyle(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w900,
@@ -114,38 +239,13 @@ class _LoginRegisterState extends State<LoginRegister> {
                             SizedBox(
                               height: 10.h,
                             ),
-                            Form(
-                              key: _formKey,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 35.w,
-                                      vertical: 8.h,
-                                    ),
-                                    child: CustomTextFormField(
-                                      errorMessage:
-                                          "Phone Number should be exactly 10 digits long",
-                                      saveVariable: _savePhoneNumber,
-                                      valueKey: "Phone",
-                                      inputlength: 10,
-                                      keyboardType: TextInputType.phone,
-                                      hintTextValue: 'Phone No',
-                                    ),
-                                  ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Color(0xff0876B5),
-                                    ),
-                                    onPressed: _isLoading ? null : _trySubmit,
-                                    child: _isLoading
-                                        ? CircularProgressIndicator()
-                                        : Text("Submit"),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            _isLoading
+                                ? Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : currentState == VerifyState.formState
+                                    ? getForm(context)
+                                    : getOtp(context),
                             SizedBox(
                               height: 20.h,
                             ),
