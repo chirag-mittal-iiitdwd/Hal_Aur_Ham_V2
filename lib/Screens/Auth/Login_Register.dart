@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hal_aur_ham_v2/Screens/Auth/Verify_otp_screen.dart';
 import 'package:hal_aur_ham_v2/Screens/Auth/Widgets/CustomTextFormField.dart';
 import 'package:hal_aur_ham_v2/Screens/WelcomeScreen/WelcomeScreen.dart';
 
