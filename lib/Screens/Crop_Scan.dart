@@ -99,7 +99,7 @@ class _DemoVideoState extends State<DemoVideo> {
       Navigator.of(context).pushNamed(LoadingScreen.routeName);
     });
     var apiAddress =
-        "https://detect.roboflow.com/ok-nnzum/1?api_key=vgKoqrorYQwrygJjjad2";
+        "https://detect.roboflow.com/detection2onwhole/8?api_key=ANr5ozpqqr3sL8croyQm";
 
     var request = http.MultipartRequest(
       'POST',
