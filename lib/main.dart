@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hal_aur_ham_v2/Screens/Choose_Crop.dart';
+import 'package:hal_aur_ham_v2/Screens/Crop%20Scan/Choose_Crop.dart';
 import 'package:hal_aur_ham_v2/Screens/Community/Community_screen.dart';
 import 'package:hal_aur_ham_v2/Screens/News%20Detail/News_Detail_Screen.dart';
-import 'package:hal_aur_ham_v2/Screens/Scan_Result_Copy.dart';
+import 'package:hal_aur_ham_v2/Screens/Crop%20Scan/Scan_Result.dart';
 import 'package:hal_aur_ham_v2/Screens/Settings/SettingsScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'Screens/Loading_Screen.dart';
 
 import './Screens/Settings/SettingsScreen.dart';
 import './Model/ProfileModel.dart';
-import './Screens/Crop_Scan.dart';
+import 'Screens/Crop Scan/Crop_Scan.dart';
 import 'Screens/Crop Viz/Crop_Viz.dart';
 import 'Screens/Drone Status/Drone_Status.dart';
-import './Screens/Scan_Result.dart';
+import 'Screens/Crop Scan/Scan_Result.dart';
 import 'Screens/Profile/Profile_Screen.dart';
-import '../Model/Weather_Model.dart';
 import '../Screens/Weather/Weather.dart';
-import 'Screens/Auth/Login_Register.dart';
 import 'Screens/Auth/Login_Register.dart';
 import './Model/NewsItems.dart';
 import 'Screens/WelcomeScreen/WelcomeScreen.dart';
@@ -64,10 +61,8 @@ class MyApp extends StatelessWidget {
             CropVizScreen.routeName: (ctx) => CropVizScreen(),
             CropScan.routeName: (ctx) => CropScan(),
             ScanResult.routeName: (ctx) => ScanResult(),
-            scanResultCopy.routeName: (ctx) => scanResultCopy(),
             NewsDetail.routeName: (ctx) => NewsDetail(),
             chooseCrop.routeName: (ctx) => chooseCrop(),
-            LoadingScreen.routeName: (ctx) => LoadingScreen(),
             SettingsScreen.routeName:(ctx)=>SettingsScreen(),
             CommunityScreen.routeName:(ctx)=>CommunityScreen(),
           },

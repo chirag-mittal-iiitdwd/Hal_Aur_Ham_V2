@@ -1,6 +1,0 @@
-Cercospora Leaf Spot
-Common Rust
-Northern Leaf Blight
-Healthy
-Other
-
