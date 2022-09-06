@@ -50,24 +50,48 @@ class ScanResult extends StatelessWidget {
                     child: Column(
                       children: [
                         Container(
-                            height: 355.h,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 20.w,
-                              vertical: 20.h,
-                            ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20.w, vertical: 20.h),
+                          child: GlowContainer(
+                            height: 340.h,
+                            width: double.infinity,
                             margin: EdgeInsets.symmetric(
                               vertical: 2.h,
                               horizontal: 2.w,
                             ),
-                            child: isLeaf
-                                ? Image.file(
-                                    pickedImage,
-                                    fit: BoxFit.fill,
-                                  )
-                                : Image.asset(
-                                    'Assets/Images/OK.jpeg',
-                                    fit: BoxFit.fill,
-                                  )),
+                            padding: EdgeInsets.only(
+                                top: 17.h, left: 17.w, right: 17.w),
+                            borderRadius: BorderRadius.circular(30.r),
+                            color: Color(0xB0FFDFB0),
+                            child: Column(
+                              children: [
+                                Container(
+                                  child: isLeaf
+                                      ? ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(30.r),
+                                          child: Image.file(
+                                            pickedImage,
+                                            fit: BoxFit.fill,
+                                            width: double.infinity,
+                                            height: 300.h,
+                                          ),
+                                        )
+                                      : ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(30.r),
+                                          child: Image.asset(
+                                            'Assets/Images/OK.jpeg',
+                                            fit: BoxFit.fill,
+                                            width: double.infinity,
+                                            height: 300.h,
+                                          ),
+                                        ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                         Container(
                           padding: EdgeInsets.only(left: 20.w, right: 20.w),
                           child: GlowContainer(

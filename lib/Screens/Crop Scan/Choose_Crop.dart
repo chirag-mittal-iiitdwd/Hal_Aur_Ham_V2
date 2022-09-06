@@ -62,14 +62,15 @@ class CropCatalog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
       child: GlowContainer(
         height: 600.h,
         margin: EdgeInsets.symmetric(
           vertical: 2.h,
           horizontal: 2.w,
         ),
-        padding: EdgeInsets.only(top: 15.h, left: 10.w, right: 10.w),
+
+        padding: EdgeInsets.only(top: 15.h, left: 2.w, right: 2.w),
         // glowColor: Color(0xB0FFDFB0),
         borderRadius: BorderRadius.circular(30.r),
         color: Color(0xB0FFDFB0),
@@ -88,9 +89,9 @@ class CropCatalog extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.r),
               child: GestureDetector(
                 onTap: () {
-                    Navigator.of(context).pushNamed(CropScan.routeName,
-                        arguments: {'selectedCrop': CropArray[i].cropName});
-                  },
+                  Navigator.of(context).pushNamed(CropScan.routeName,
+                      arguments: {'selectedCrop': CropArray[i].cropName});
+                },
                 child: GridTile(
                   child: Image.asset(
                     CropArray[i].cropPath,
@@ -107,7 +108,7 @@ class CropCatalog extends StatelessWidget {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 2 / 2,
-            crossAxisSpacing: 10,
+            crossAxisSpacing: 35,
             mainAxisSpacing: 15,
           ),
         ),

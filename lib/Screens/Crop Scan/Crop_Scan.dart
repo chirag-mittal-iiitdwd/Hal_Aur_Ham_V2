@@ -235,22 +235,28 @@ class _CropScanState extends State<CropScan> {
                   isLoading
                       ? Center(
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 30.w,vertical: 20.h),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30.w, vertical: 20.h),
                             height: 150.h,
                             width: 200.w,
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.r),color: Color.fromRGBO(0, 0, 0, 0.6),),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              color: Color.fromRGBO(0, 0, 0, 0.6),
+                            ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Hang Onn, We are getting the results',
+                                  'Hang On, We are getting the results',
                                   style: TextStyle(
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                   ),
                                 ),
-                                SizedBox(height: 20.h,),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
                                 CircularProgressIndicator(),
                               ],
                             ),
@@ -270,23 +276,26 @@ class _CropScanState extends State<CropScan> {
                                     horizontal: 2.w,
                                   ),
                                   padding: EdgeInsets.only(
-                                      top: 30.h, left: 30.w, right: 30.w),
+                                      top: 17.h, left: 17.w, right: 17.w),
                                   borderRadius: BorderRadius.circular(30.r),
                                   color: Color(0xB0FFDFB0),
                                   child: Column(
                                     children: [
                                       Container(
-                                        decoration: const BoxDecoration(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(30.r),
                                           color: Colors.black54,
                                         ),
-                                        height: 300.h,
+                                        height: 333.h,
                                       ),
-                                      IconButton(
-                                        icon: Image.asset(
-                                          'Assets/Images/ScanCamera.png',
-                                        ),
-                                        iconSize: 100.h,
-                                        onPressed: (() => UploadImageDialog()),
+                                      InkWell(
+                                        child: Container(
+                                            child: Image.asset(
+                                                'Assets/Images/ScanCamera.png'),
+                                            height: 100.h,
+                                            width: 100.h),
+                                        onTap: (() => UploadImageDialog()),
                                       ),
                                     ],
                                   ),
