@@ -26,8 +26,14 @@ class _CropScanState extends State<CropScan> {
   var selectedCrop;
 
   result(File image) async {
-    var apiAddress =
-        "https://classify.roboflow.com/do5/2?api_key=uq07sZYqektMXKoUld8Z";
+    var apiAddress;
+    if (selectedCrop == "Apple") {
+      apiAddress =
+          "https://classify.roboflow.com/run-9o3th/1?api_key=pDqBzQpmauLOOlf9ubaD";
+    } else if (selectedCrop == "Grape") {
+      apiAddress =
+          "https://classify.roboflow.com/go-yatxc/1?api_key=pDqBzQpmauLOOlf9ubaD";
+    }
 
     var request = http.MultipartRequest(
       'POST',
