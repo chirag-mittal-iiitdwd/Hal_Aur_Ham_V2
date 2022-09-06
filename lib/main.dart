@@ -11,7 +11,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import './Screens/Settings/SettingsScreen.dart';
-import './Model/ProfileModel.dart';
 import 'Screens/Crop Scan/Crop_Scan.dart';
 import 'Screens/Crop Viz/Crop_Viz.dart';
 import 'Screens/Drone Status/Drone_Status.dart';
@@ -37,9 +36,6 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
             value: NewsItems(),
           ),
-          ChangeNotifierProvider.value(
-            value: UserProfile(),
-          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -62,7 +58,7 @@ class MyApp extends StatelessWidget {
             CropScan.routeName: (ctx) => CropScan(),
             ScanResult.routeName: (ctx) => ScanResult(),
             NewsDetail.routeName: (ctx) => NewsDetail(),
-            chooseCrop.routeName: (ctx) => chooseCrop(),
+            ChooseCrop.routeName: (ctx) => ChooseCrop(),
             SettingsScreen.routeName:(ctx)=>SettingsScreen(),
             CommunityScreen.routeName:(ctx)=>CommunityScreen(),
           },

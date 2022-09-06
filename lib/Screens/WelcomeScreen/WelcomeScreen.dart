@@ -159,7 +159,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     imageRoute: 'Assets/Images/weather.png',
                                   ),
                                   Button(
-                                    routeName: chooseCrop.routeName,
+                                    routeName: ChooseCrop.routeName,
                                     imageRoute: 'Assets/Images/camera.png',
                                   ),
                                   Button(

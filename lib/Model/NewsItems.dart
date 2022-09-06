@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-import './NewsItem.dart';
+class News {
+  final String news;
+  final String description;
+  News({this.news,this.description});
+}
 
 class NewsItems with ChangeNotifier {
   final List<News> _items = [

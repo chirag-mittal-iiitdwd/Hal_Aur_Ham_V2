@@ -98,7 +98,7 @@ class ScanResult extends StatelessWidget {
                                       FlatButton(
                                         onPressed: () {
                                           Navigator.of(context)
-                                              .pushNamed(chooseCrop.routeName);
+                                              .pushNamed(ChooseCrop.routeName);
                                         },
                                         child: Image.asset(
                                           'Assets/Images/camera.png',

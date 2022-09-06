@@ -6,7 +6,7 @@ import 'package:hal_aur_ham_v2/Screens/Crop%20Scan/Crop_Scan.dart';
 import '../../Components/App Drawer/App_Drawer.dart';
 import '../../Model/CropData.dart';
 
-class chooseCrop extends StatelessWidget {
+class ChooseCrop extends StatelessWidget {
   static const routeName = '/chooseCrop';
 
   @override

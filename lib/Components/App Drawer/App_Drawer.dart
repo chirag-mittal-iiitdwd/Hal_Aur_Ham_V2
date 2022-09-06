@@ -69,7 +69,7 @@ class AppDrawer extends StatelessWidget {
                 AppDrawerElement(routeName: WeatherScreen.routeName, icon: Icons.cloud, label: 'Weather'),
                 AppDrawerElement(routeName: DroneStatus.routeName, icon: Icons.flight, label: 'Drone Status'),
                 AppDrawerElement(routeName: CropVizScreen.routeName, icon: Icons.auto_graph, label: 'Crop Viz'),
-                AppDrawerElement(routeName: chooseCrop.routeName, icon: Icons.document_scanner_outlined, label: 'Crop Scan'),
+                AppDrawerElement(routeName: ChooseCrop.routeName, icon: Icons.document_scanner_outlined, label: 'Crop Scan'),
                 AppDrawerElement(routeName: CommunityScreen.routeName, icon: Icons.people, label: 'Community'),
                 AppDrawerElement(routeName: SettingsScreen.routeName, icon: Icons.settings, label: 'Settings'),
                 

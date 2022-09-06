@@ -27,7 +27,7 @@ class AppDrawerElement extends StatelessWidget {
         color: Colors.black,
       ),
       onTap: () {
-        Navigator.of(context).pushNamed(routeName);
+        Navigator.of(context).pushReplacementNamed(routeName);
       },
     );
   }
