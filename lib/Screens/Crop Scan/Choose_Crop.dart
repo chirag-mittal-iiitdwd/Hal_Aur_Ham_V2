@@ -37,11 +37,11 @@ class ChooseCrop extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          'Select your crop',
+                          'Select Your Crop',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 32.sp,
+                            color:Colors.white,
+                            fontSize: 25.sp,
                           ),
                         ),
                         CropCatalog(),
@@ -71,7 +71,6 @@ class CropCatalog extends StatelessWidget {
         ),
 
         padding: EdgeInsets.only(top: 15.h, left: 2.w, right: 2.w),
-        // glowColor: Color(0xB0FFDFB0),
         borderRadius: BorderRadius.circular(30.r),
         color: Color(0xB0FFDFB0),
         child: GridView.builder(

@@ -167,14 +167,28 @@ class ScanResult extends StatelessWidget {
                                             )
                                           : Column(
                                               children: [
-                                                Text(
-                                                  "Disease: ${results['top']}",
-                                                  style: TextStyle(
-                                                      fontSize: 14.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white),
-                                                ),
+                                                results['top'].contains(
+                                                        new RegExp(r'healthy',
+                                                            caseSensitive:
+                                                                false))
+                                                    ? Text(
+                                                        "This leaf looks healthy.",
+                                                        style: TextStyle(
+                                                            fontSize: 14.sp,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.white),
+                                                      )
+                                                    : Text(
+                                                        "Disease: ${results['top']}",
+                                                        style: TextStyle(
+                                                            fontSize: 14.sp,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.white),
+                                                      ),
                                                 SizedBox(
                                                   height: 20.h,
                                                 ),

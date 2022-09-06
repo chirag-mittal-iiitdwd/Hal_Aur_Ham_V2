@@ -233,37 +233,41 @@ class _CropScanState extends State<CropScan> {
                     alignment: Alignment.center,
                   ),
                   isLoading
-                      ? Center(
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 30.w, vertical: 20.h),
-                            height: 150.h,
-                            width: 200.w,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.r),
-                              color: Color.fromRGBO(0, 0, 0, 0.6),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Hang On, We are getting the results',
-                                  style: TextStyle(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                      ? Container(
+                          padding: EdgeInsets.only(
+                              top: 17.h, left: 17.w, right: 17.w),
+                          child: Center(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 30.w, vertical: 20.h),
+                              height: 200.h,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30.r),
+                                color: Color.fromRGBO(0, 0, 0, 0.6),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Hang on, we are getting the results.',
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                CircularProgressIndicator(),
-                              ],
+                                  SizedBox(
+                                    height: 20.h,
+                                  ),
+                                  CircularProgressIndicator(),
+                                ],
+                              ),
                             ),
                           ),
                         )
                       : Container(
-                          margin: EdgeInsets.only(top: 70.h),
+                          margin: EdgeInsets.only(top: 40.h),
                           child: Column(
                             children: [
                               Container(
