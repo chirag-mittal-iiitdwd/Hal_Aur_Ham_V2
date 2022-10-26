@@ -173,7 +173,8 @@ class _RegiserationFormState extends State<RegiserationForm> {
                                     vertical: 8.h,
                                   ),
                                   child: CustomTextFormField(
-                                    errorMessage: "Aadhar Should be exactly 12 digits long",
+                                    errorMessage:
+                                        "Aadhar Should be exactly 12 digits long",
                                     saveVariable: _saveAadhar,
                                     valueKey: "Aadhar",
                                     inputlength: 12,
@@ -194,7 +195,8 @@ class _RegiserationFormState extends State<RegiserationForm> {
                                   height: 20.h,
                                 ),
                                 LogoutButton(
-                                    Buttontext: "Use Different Number ?",),
+                                  Buttontext: "Use Different Number ?",
+                                ),
                               ],
                             ),
                           ),

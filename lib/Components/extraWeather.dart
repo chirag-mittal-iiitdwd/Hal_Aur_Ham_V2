@@ -13,7 +13,7 @@ class ExtraWeather extends StatelessWidget {
       children: [
         Column(
           children: [
-            Icon(
+            const Icon(
               CupertinoIcons.wind,
             ),
             SizedBox(

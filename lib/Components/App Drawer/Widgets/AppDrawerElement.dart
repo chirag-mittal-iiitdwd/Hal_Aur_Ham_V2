@@ -5,7 +5,7 @@ class AppDrawerElement extends StatelessWidget {
   final String routeName;
   final IconData icon;
   final String label;
-  AppDrawerElement({
+  const AppDrawerElement({
     @required this.routeName,
     @required this.icon,
     @required this.label,

@@ -4,11 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class Button extends StatelessWidget {
   final routeName;
   final String imageRoute;
-  Button({this.routeName,this.imageRoute});
+  const Button({this.routeName, this.imageRoute});
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
       onPressed: () {
         Navigator.of(context).pushNamed(routeName);
       },

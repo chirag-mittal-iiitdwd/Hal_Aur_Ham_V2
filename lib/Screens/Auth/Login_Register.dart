@@ -25,7 +25,7 @@ class _LoginRegisterState extends State<LoginRegister> {
   String _verificationId;
   bool _isLoading = false;
 
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   void signInWithPhoneAuthCRedential(
       PhoneAuthCredential phoneAuthCredential) async {
@@ -53,7 +53,7 @@ class _LoginRegisterState extends State<LoginRegister> {
       setState(() {
         _isLoading = false;
       });
-      _scaffoldKey.currentState.showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(e.message),
           backgroundColor: Theme.of(context).errorColor,
@@ -82,7 +82,7 @@ class _LoginRegisterState extends State<LoginRegister> {
           setState(() {
             _isLoading = false;
           });
-          _scaffoldKey.currentState.showSnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(verificationFailed.message),
               backgroundColor: Theme.of(context).errorColor,
@@ -97,10 +97,10 @@ class _LoginRegisterState extends State<LoginRegister> {
           });
         },
         codeAutoRetrievalTimeout: (verificationId) async {
-          _scaffoldKey.currentState.showSnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content:
-                  Text("Timeout !!, Please enter another OTP we just sent you"),
+                  const Text("Timeout !!, Please enter another OTP we just sent you"),
               backgroundColor: Theme.of(context).errorColor,
             ),
           );
@@ -109,7 +109,7 @@ class _LoginRegisterState extends State<LoginRegister> {
             verificationId = verificationId;
           });
         },
-        timeout: Duration(seconds: 30),
+        timeout: const Duration(seconds: 30),
       );
     } else {
       setState(() {
@@ -158,10 +158,10 @@ class _LoginRegisterState extends State<LoginRegister> {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Color(0xff0876B5),
+              backgroundColor: const Color(0xff0876B5),
             ),
             onPressed: _isLoading ? null : _validateAndSubmitPhone,
-            child: Text("Submit"),
+            child: const Text("Submit"),
           ),
         ],
       ),
@@ -194,10 +194,10 @@ class _LoginRegisterState extends State<LoginRegister> {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Color(0xff0876B5),
+              backgroundColor: const Color(0xff0876B5),
             ),
             onPressed: _isLoading ? null : _validateOtpAndVerify,
-            child: Text("Verify"),
+            child: const Text("Verify"),
           ),
         ],
       ),
@@ -224,7 +224,7 @@ class _LoginRegisterState extends State<LoginRegister> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20.r),
                   child: Container(
-                    color: Color(0xA8FFDFB0),
+                    color: const Color(0xA8FFDFB0),
                     child: Center(
                       child: SingleChildScrollView(
                         child: Column(
@@ -252,7 +252,7 @@ class _LoginRegisterState extends State<LoginRegister> {
                               height: 10.h,
                             ),
                             _isLoading
-                                ? Center(
+                                ? const Center(
                                     child: CircularProgressIndicator(),
                                   )
                                 : currentState == VerifyState.formState

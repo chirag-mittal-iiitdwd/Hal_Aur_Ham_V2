@@ -1,16 +1,8 @@
-// ignore_for_file: prefer_const_constructors, unused_import
-
-import 'dart:convert';
-import 'dart:ffi';
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hal_aur_ham_v2/Components/App%20Drawer/App_Drawer.dart';
-import 'package:http/http.dart' as http;
-import 'Crop_Scan.dart';
 import 'package:hal_aur_ham_v2/Screens/Crop%20Scan/Choose_Crop.dart';
 
 class ScanResult extends StatelessWidget {
@@ -62,7 +54,7 @@ class ScanResult extends StatelessWidget {
                             padding: EdgeInsets.only(
                                 top: 17.h, left: 17.w, right: 17.w),
                             borderRadius: BorderRadius.circular(30.r),
-                            color: Color(0xB0FFDFB0),
+                            color: const Color(0xB0FFDFB0),
                             child: Column(
                               children: [
                                 Container(
@@ -100,7 +92,7 @@ class ScanResult extends StatelessWidget {
                               horizontal: 2.w,
                             ),
                             borderRadius: BorderRadius.circular(30.r),
-                            color: Color.fromRGBO(0, 0, 0, 0.6),
+                            color: const Color.fromRGBO(0, 0, 0, 0.6),
                             child: isLeaf == false
                                 ? Column(
                                     children: [
@@ -119,7 +111,7 @@ class ScanResult extends StatelessWidget {
                                       SizedBox(
                                         height: 20.h,
                                       ),
-                                      FlatButton(
+                                      ElevatedButton(
                                         onPressed: () {
                                           Navigator.of(context)
                                               .pushNamed(ChooseCrop.routeName);
